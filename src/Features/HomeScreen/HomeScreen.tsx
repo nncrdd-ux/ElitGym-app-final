@@ -74,7 +74,7 @@ const HomeScreen = ({ navigation }: NavigationProps) => {
           title="O Meu Plano"
           subtitle="Visualize e gira a sua rotina semanal"
           imageSource={require('../../../assets/image_19ep_j.png')} 
-          onPress={() => navigation.navigate('RotinasList')} 
+          onPress={() => navigation.navigate('PlanoTreinoScreen')} 
         />
 
         <AppCardButton

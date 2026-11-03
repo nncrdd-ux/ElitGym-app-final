@@ -12,10 +12,15 @@ import RotinasList from './src/Features/Rotinas/RotinasList';
 import Perfil from './src/Features/Profile/Perfil';
 import SettingsScreen from './src/Features/Settings/SettingsScreen';
 import DetalheRotina from './src/Features/Rotinas/DetalheRotina';
+import {listaRotinasGeral} from './src/Features/Rotinas/Rotinas';
+import { useState } from 'react';
+import PlanoTreinoScreen from './src/Features/PlanoTreinoScreen/PlanoTreinoScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
+  const [rotinas, setRotinas] = useState(listaRotinasGeral);
+  
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -69,6 +74,11 @@ export default function App() {
           <Stack.Screen 
             name="DetalheRotina"
             component={DetalheRotina}
+            options={{ headerShown: false }} 
+          />
+          <Stack.Screen 
+            name="PlanoTreinoScreen"
+            component={PlanoTreinoScreen}
             options={{ headerShown: false }} 
           />
 

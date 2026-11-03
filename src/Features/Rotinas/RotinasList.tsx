@@ -8,7 +8,7 @@ import Header from '../../Components/Header/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Edit, Trash } from 'react-native-feather';
 import Checkbox from "expo-checkbox"; 
-import Icon from '@mdi/react';
+
 
 type Filtro = "todas" | "ativas" | "inativas";
 
