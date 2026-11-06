@@ -56,11 +56,17 @@ export default function App() {
             component={ProfileScreen} 
             options={{ headerShown: false }} 
           />
-          <Stack.Screen 
-            name="RotinasList"
-            component={RotinasList}
-            options={{ headerShown: false }} 
-          />
+          <Stack.Screen
+          name="RotinasList"
+          options={{ headerShown: false }}>
+            {(props) => (
+              <RotinasList 
+                {...props} 
+                rotinas={rotinas} 
+                setRotinas={setRotinas} 
+              />
+          )}
+          </Stack.Screen>
           <Stack.Screen 
             name="Perfil"
             component={Perfil}
@@ -77,10 +83,16 @@ export default function App() {
             options={{ headerShown: false }} 
           />
           <Stack.Screen 
-            name="PlanoTreinoScreen"
-            component={PlanoTreinoScreen}
-            options={{ headerShown: false }} 
-          />
+          name="PlanoTreinoScreen"
+          options={{ headerShown: false }}>
+            {(props) => (
+              <PlanoTreinoScreen 
+                {...props} 
+                rotinas={rotinas} // 👈 ESSENCIAL: Injeta a lista mestre para ela não chegar como undefined!
+                setRotinas={setRotinas} 
+              />
+        )}
+          </Stack.Screen>
 
         </Stack.Navigator>
       </NavigationContainer>

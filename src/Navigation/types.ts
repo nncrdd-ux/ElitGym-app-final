@@ -4,7 +4,7 @@ export type RootStackParamList = {
   ExerciciosList: { musculoSelecionado: string };
   DetalheExercicio: { exercicio: any };
   ProfileScreen: undefined;
-  PlanoTreinoScreen: undefined;
+  PlanoTreinoScreen: { rotinasAtivas: any[] } | undefined;
   HidratationScreen: undefined;
   RotinasList: undefined;
   Perfil: undefined

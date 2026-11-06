@@ -19,7 +19,7 @@ export default function MuscleSelectionScreen() {
     <View style={styles.mainContainer}>
       <Header subtitulo="Zonas de Treino" />
 
-      {/* NOVO: Botão Voltar para Trás universal */}
+      {/* Botão Voltar para Trás universal */}
       <TouchableOpacity 
         style={styles.botaoVoltar} 
         onPress={() => navigation.goBack()}
@@ -30,7 +30,7 @@ export default function MuscleSelectionScreen() {
 
       <Text style={styles.tituloInstrucao}>Escolhe o grupo muscular que queres treinar:</Text>
 
-      {/* CONTAINER DO MAPA DO CORPO */}
+      {/* MAPA DO CORPO */}
       <View style={styles.mapaContainer}>
         <Image 
           source={require('../../../assets/corpo_inteiro_2.png')} 
@@ -38,7 +38,7 @@ export default function MuscleSelectionScreen() {
           resizeMode="contain"
         />
 
-        {/* CAMADAS DE LUZ */}
+        {/* CAMADAS */}
         {musculoAceso === 'peito' && (
           <Image source={require('../../../assets/peito_aceso.png')} style={styles.imagemCamada} resizeMode="contain" />
         )}
@@ -57,18 +57,42 @@ export default function MuscleSelectionScreen() {
         {musculoAceso === 'gluteos' && (
           <Image source={require('../../../assets/gluteos_aceso.png')} style={styles.imagemCamada} resizeMode="contain" />
         )}
+        {musculoAceso === 'ombros' && (
+          <Image source={require('../../../assets/ombros_aceso.png')} style={styles.imagemCamada} resizeMode="contain" />
+        )}
+        {musculoAceso === 'abs' && (
+          <Image source={require('../../../assets/abs_aceso.png')} style={styles.imagemCamada} resizeMode="contain" />
+        )}
+        {musculoAceso === 'quadriceps' && (
+          <Image source={require('../../../assets/quadriceps_aceso.png')} style={styles.imagemCamada} resizeMode="contain" />
+        )}
+        {musculoAceso === 'gemeos' && (
+          <Image source={require('../../../assets/gemeos_aceso.png')} style={styles.imagemCamada} resizeMode="contain" />
+        )}
+        {musculoAceso === 'antebraco' && (
+          <Image source={require('../../../assets/antebraco_aceso.png')} style={styles.imagemCamada} resizeMode="contain" />
+        )}
+        {musculoAceso === 'posterior_coxa' && (
+          <Image source={require('../../../assets/posterior_coxa_aceso.png')} style={styles.imagemCamada} resizeMode="contain" />
+        )}
 
         {/* ZONAS DE CLIQUE INVISÍVEIS */}
-        <TouchableOpacity style={[styles.zonaToque, { top: 230, left: 110, width: 40, height: 25 }]} onPress={() => aoPressionarMusculo('peito')} />
+        <TouchableOpacity style={[styles.zonaToque, { top: 230, left: 112, width: 36, height: 25 }]} onPress={() => aoPressionarMusculo('peito')} />
+        <TouchableOpacity style={[styles.zonaToque, { top: 258, left: 112, width: 36, height: 33 }]} onPress={() => aoPressionarMusculo('abs')} />
         <TouchableOpacity style={[styles.zonaToque, { top: 244, left: 91, width: 18, height: 23 }]} onPress={() => aoPressionarMusculo('biceps')} />
         <TouchableOpacity style={[styles.zonaToque, { top: 244, left: 151, width: 18, height: 23 }]} onPress={() => aoPressionarMusculo('biceps')} />
+        <TouchableOpacity style={[styles.zonaToque, { top: 265, left: 89, width: 18, height: 23 }]} onPress={() => aoPressionarMusculo('antebraco')} />
+        <TouchableOpacity style={[styles.zonaToque, { top: 265, left: 153, width: 18, height: 23 }]} onPress={() => aoPressionarMusculo('antebraco')} />
+        <TouchableOpacity style={[styles.zonaToque, { top: 230, left: 92, width: 18, height: 15 }]} onPress={() => aoPressionarMusculo('ombros')} />
+        <TouchableOpacity style={[styles.zonaToque, { top: 230, left: 149, width: 18, height: 15 }]} onPress={() => aoPressionarMusculo('ombros')} />
         <TouchableOpacity style={[styles.zonaToque, { top: 295, left: 99, width: 60, height: 55 }]} onPress={() => aoPressionarMusculo('quadriceps')} />
         <TouchableOpacity style={[styles.zonaToque, { top: 238, left: 228, width: 20, height: 42 }]} onPress={() => aoPressionarMusculo('triceps')} />
         <TouchableOpacity style={[styles.zonaToque, { top: 238, left: 292, width: 20, height: 42 }]} onPress={() => aoPressionarMusculo('triceps')} />
         <TouchableOpacity style={[styles.zonaToque, { top: 230, left: 250, width: 40, height: 54 }]} onPress={() => aoPressionarMusculo('costas')} />
         <TouchableOpacity style={[styles.zonaToque, { top: 287, left: 250, width: 40, height: 23 }]} onPress={() => aoPressionarMusculo('gluteos')} />
+        <TouchableOpacity style={[styles.zonaToque, { top: 313, left: 250, width: 40, height: 29 }]} onPress={() => aoPressionarMusculo('posterior_coxa')} />
+        <TouchableOpacity style={[styles.zonaToque, { top: 345, left: 250, width: 40, height: 40 }]} onPress={() => aoPressionarMusculo('gemeos')} />
       </View>
-
       <TouchableOpacity 
         style={styles.botaoVerTodos} 
         onPress={() => {
@@ -78,8 +102,8 @@ export default function MuscleSelectionScreen() {
       >
         <Text style={styles.textoVerTodos}>
           {musculoAceso
-          ?`💪 Ver Exercícios de ${musculoAceso.toUpperCase()}`
-          :"💪 Ver Todos os Exercícios"
+          ?`Ver Exercícios de ${musculoAceso.toUpperCase()}`
+          :"Ver Todos os Exercícios"
           }
           </Text>
       </TouchableOpacity>
@@ -129,7 +153,7 @@ const styles = StyleSheet.create({
   },
   zonaToque: {
     position: 'absolute',
-    backgroundColor: 'transparent', 
+    backgroundColor: '#ffffff', 
     borderRadius: 4,
   },
   botaoVerTodos: {

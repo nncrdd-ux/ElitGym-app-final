@@ -6,7 +6,7 @@ import { RootStackParamList } from '../../Navigation/types';
 import { Dimensions, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Header from '../../Components/Header/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Edit, Trash } from 'react-native-feather';
+import { ChevronLeft, Edit, Trash } from 'react-native-feather';
 import Checkbox from "expo-checkbox"; 
 
 
@@ -17,13 +17,12 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'RotinasList
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-function RotinasList() {
-    const [rotinas, setRotinas] = useState<RotinaProps[]>(listaRotinasGeral);
-    const navigation = useNavigation<NavigationProp>();
+export default function RotinasList({ rotinas, setRotinas, navigation }: any) {
+    
     const [filtro, setFiltro] = useState<Filtro>("todas");
     const rotinasVisiveis = (tipoFiltro: Filtro) => {
     if (filtro === "inativas") {
-      return rotinas.filter((routine) => !routine.selecionada);
+      return rotinas.filter((routine: RotinaProps) => !routine.selecionada);
     }
     return rotinas;}
     const renderItemRotina = ({ item }: { item: RotinaProps }) => {
@@ -39,7 +38,7 @@ function RotinasList() {
             value={item.selecionada}
             onValueChange={() => {
               setRotinas(
-                rotinas.map((r) =>
+                rotinas.map((r: RotinaProps) =>
                     item.id === r.id ? { ...r, selecionada: !r.selecionada } : r,
                   ),
                 );
@@ -52,7 +51,7 @@ function RotinasList() {
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={() => {
-                setRotinas(rotinas.filter((r) => r.id !== item.id));
+                setRotinas(rotinas.filter((r: RotinaProps) => r.id !== item.id));
               }}
               >
               <Trash color="#ff4d4d" strokeWidth={2} size={20} />
@@ -65,7 +64,7 @@ function RotinasList() {
 
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <View style={styles.mainContainer}>
+      <View style={{ flex: 1, backgroundColor: '#000000', position: 'relative' }}>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -75,7 +74,7 @@ function RotinasList() {
               <Header subtitulo="Lista de Rotinas Inativas"/>
               <View style={{paddingHorizontal: 20, paddingTop: 30, flex: 1, marginTop: 40}}>
                 <FlatList
-                  data={rotinas.filter((routine) => !routine.selecionada)}
+                  data={rotinas.filter((routine: RotinaProps) => !routine.selecionada)}
                   keyExtractor={(item) => 'inativa-' + item.id}
                   contentContainerStyle={styles.listaContainer}
                   renderItem={renderItemRotina}
@@ -101,6 +100,13 @@ function RotinasList() {
             </View>
 
         </ScrollView>
+        <View style={{ position: 'absolute', bottom: 90, left: 24, zIndex: 99 }}>
+  <ChevronLeft
+    color="#fcf9f9"
+    size={24}
+    onPress={() => navigation.goBack()}
+  />
+</View>
       </View>
     </SafeAreaView>
     );
@@ -147,5 +153,3 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
 });
-
-export default RotinasList

@@ -9,7 +9,7 @@ import AppCardButton from '../../Components/AppCardButton/AppCardButton';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import {listaExerciciosGeral} from '../Exercicios/Exercicios';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { PlayCircle, PlusSquare} from 'react-native-feather';
+import { ChevronLeft, PlayCircle, PlusSquare} from 'react-native-feather';
 
 type Filtro = "todas" | "ativas" | "inativas";
 
@@ -18,12 +18,10 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'PlanoTreino
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-function PlanoTreinoScreen() {
-    const navigation = useNavigation<NavigationProp>();
-    const [ rotinas, setRotinas] = React.useState(listaRotinasGeral);
+export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation }: any) {
     const rotinasVisiveis = (tipoFiltro: Filtro) => {
         if (tipoFiltro === "ativas") {
-      return rotinas.filter((routine) => routine.selecionada);
+      return rotinas.filter((routine: RotinaProps) => routine.selecionada);
         }
     return rotinas;}
     const renderItemRotina = ({ item }: { item: RotinaProps }) => {
@@ -40,15 +38,13 @@ function PlanoTreinoScreen() {
                     </View>
                     <PlayCircle color="#45c7cc" strokeWidth={2} size={24} />
                 </View>
-                
              </TouchableOpacity>
- 
     )}
   return (
     <SafeAreaView style={styles.mainContainer}>
       <Header subtitulo='Plano de Treino' />
       <View style={styles.scrollContainer}>
-        {rotinasVisiveis('ativas').map((routine) => (
+        {rotinasVisiveis('ativas').map((routine: RotinaProps) => (
           <View key={routine.id}>
             {renderItemRotina({ item: routine })}
           </View>
@@ -61,6 +57,13 @@ function PlanoTreinoScreen() {
         style={{ alignSelf: 'flex-end', bottom: 20, right: 30 }}
         onPress={() => navigation.navigate('RotinasList')}
       />
+      <View style={{ position: 'absolute', bottom: 100, left: 24, zIndex: 99 }}>
+        <ChevronLeft
+          color="#fcf9f9"
+          size={24}
+          onPress={() => navigation.goBack()}
+        />
+      </View>
       <Footer />
     </SafeAreaView>
   )
@@ -107,5 +110,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 10,
   },
+  
 });
-export default PlanoTreinoScreen
