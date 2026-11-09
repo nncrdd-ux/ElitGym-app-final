@@ -15,6 +15,7 @@ import DetalheRotina from './src/Features/Rotinas/DetalheRotina';
 import {listaRotinasGeral} from './src/Features/Rotinas/Rotinas';
 import { useState } from 'react';
 import PlanoTreinoScreen from './src/Features/PlanoTreinoScreen/PlanoTreinoScreen';
+import HidratationScreen from './src/Features/Hidratation/HidratationScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -93,6 +94,11 @@ export default function App() {
               />
         )}
           </Stack.Screen>
+          <Stack.Screen 
+            name="HidratationScreen"
+            component={HidratationScreen}
+            options={{ headerShown: false }} 
+          />
 
         </Stack.Navigator>
       </NavigationContainer>
