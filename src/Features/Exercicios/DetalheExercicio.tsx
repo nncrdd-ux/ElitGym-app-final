@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   botaoVoltar: { alignSelf: 'flex-start', marginLeft: 20, marginTop: 10, marginBottom: 10, paddingVertical: 6, paddingHorizontal: 12, backgroundColor: '#1c1c1e', borderRadius: 8 },
   textoVoltar: { color: '#ffffff', fontSize: 14, fontWeight: '600' },
   scrollContainer: { paddingBottom: 40 },
-  imagemGrande: { width: '100%', height: 240, resizeMode: 'cover', backgroundColor: '#1c1c1e' },
+  imagemGrande: { width: '100%', height: 240, resizeMode: 'contain', backgroundColor: '#1c1c1e' },
   detalhesBox: { padding: 20 },
   titulo: { color: '#ffffff', fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
   linhaInfo: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12, borderBottomWidth: 1, borderBottomColor: '#1c1c1e', paddingBottom: 8 },

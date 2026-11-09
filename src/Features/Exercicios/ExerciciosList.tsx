@@ -12,13 +12,35 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'ExerciciosL
 export default function ExerciciosList() {
   const route = useRoute<RouteProps>();
   const navigation = useNavigation<NavigationProp>();
-  const { musculoSelecionado } = route.params;
+  const { musculoSelecionado, equipamentoSelecionado } = route.params;
 
-  const exerciciosFiltrados = musculoSelecionado === 'todos'
-    ? listaExerciciosGeral
-    : listaExerciciosGeral.filter(
-        ex => ex.musculoprincipal === musculoSelecionado || ex.musculosecundario === musculoSelecionado
+  const exerciciosFiltrados = listaExerciciosGeral.filter((ex) => {
+    
+    // Estrada A: Se o utilizador escolheu "Ver Todos"
+    if (musculoSelecionado === 'todos') {
+      return true;
+    }
+
+    // Estrada B: Se o utilizador clicou num músculo específico no mapa do corpo
+    if (musculoSelecionado) {
+      return (
+        ex.musculoprincipal === musculoSelecionado || 
+        ex.musculosecundario === musculoSelecionado
       );
+    }
+
+    // Estrada C: Se o utilizador clicou num equipamento no carrossel horizontal
+    if (equipamentoSelecionado) {
+      const filtro = equipamentoSelecionado.toLowerCase();
+      const equipamentoExercicio = ex.equipamento.toLowerCase();
+      
+      // O .includes() une "barra" com "barras" com total segurança!
+      return equipamentoExercicio.includes(filtro) || filtro.includes(equipamentoExercicio);
+    }
+
+    // Proteção por defeito: se nada vier na mala, mostra tudo
+    return true;
+  });
 
   const renderItemExercicio = ({ item }: { item: ExercicioProps }) => (
     // Ao clicar no card pequeno, viaja para o ecrã de detalhe levando o exercício selecionado
@@ -38,7 +60,14 @@ export default function ExerciciosList() {
 
   return (
     <View style={styles.mainContainer}>
-      <Header subtitulo={`Treino de ${musculoSelecionado.toUpperCase()}`} />
+      <Header subtitulo={
+        musculoSelecionado 
+      ? `Treino de ${musculoSelecionado.toUpperCase()}`
+      : equipamentoSelecionado 
+        ? `Equipamento: ${equipamentoSelecionado.toUpperCase()}`
+        : "Catálogo de Exercícios"
+      }
+        />
 
       <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()} activeOpacity={0.7}>
         <Text style={styles.textoVoltar}>⬅️ Voltar atrás</Text>

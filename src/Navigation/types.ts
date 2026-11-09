@@ -1,7 +1,7 @@
 export type RootStackParamList = {
   HomeScreen: undefined;
   MuscleSelectionScreen: undefined;
-  ExerciciosList: { musculoSelecionado: string };
+  ExerciciosList: { musculoSelecionado: string, equipamentoSelecionado?: string };
   DetalheExercicio: { exercicio: any };
   ProfileScreen: undefined;
   PlanoTreinoScreen: { rotinasAtivas: any[] } | undefined;
