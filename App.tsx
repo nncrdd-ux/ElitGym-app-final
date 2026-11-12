@@ -98,7 +98,7 @@ export default function App() {
             {(props) => (
               <PlanoTreinoScreen 
                 {...props} 
-                rotinas={rotinas} // 👈 ESSENCIAL: Injeta a lista mestre para ela não chegar como undefined!
+                rotinas={rotinas}
                 setRotinas={setRotinas} 
               />
         )}

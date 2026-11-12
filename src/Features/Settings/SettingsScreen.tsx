@@ -6,10 +6,8 @@ import { getTheme } from '../../theme/theme'; // 🧠 Puxamos a nossa função g
 
 export default function SettingsScreen({ darkmode, setDarkmode }: any) {
   
-  // 🚀 GENERAMOS O TEMA VIVO PARA ESTA VOLTA DO ECRÃ
   const theme = getTheme(darkmode);
 
-  // Criamos apenas os estilos específicos deste ecrã, limpando o mainContainer daqui!
   const styles = StyleSheet.create({
     blocoConfig: { padding: 24, marginTop: 10, backgroundColor: theme.colors.background },
     tituloSeccao: { fontSize: theme.fontSize.small, color: darkmode ? '#45c7cc' : '#666666', fontWeight: '600', marginBottom: 10, textTransform: 'uppercase' },

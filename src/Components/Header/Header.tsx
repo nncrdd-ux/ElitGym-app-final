@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   logoBotaoArea: {
     position: 'absolute',     
     left: 16,     
-    zIndex: 10, // Garante que o botão fica sempre por cima de tudo
+    zIndex: 10,
   },
   logo: {
     width: 75,

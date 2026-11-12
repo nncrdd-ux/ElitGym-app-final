@@ -32,7 +32,7 @@ useEffect(() => {
     "Podes selecionar os teus exercícios tocando nas zonas do corpo inteiro. \n\n👉 Se quiseres filtrar por tipo de Equipamento, basta deslizares (scroll) para o lado!",
     [
       { 
-        text: "Percebido!", 
+        text: "Entendido!", 
         onPress: () => console.log("Utilizador leu as instruções.") 
       }
     ]

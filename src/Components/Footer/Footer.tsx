@@ -11,20 +11,18 @@ export default function Footer() {
   return (
     <View style={styles.blocoFooterHorizontal}>
       
-      {/* Botão da Esquerda: Configurações */}
       <TouchableOpacity 
         style={styles.botaoIcone}
         onPress={() => navigation.navigate('SettingsScreen' as never)}
       >
         <Settings 
           color="#ffffff"
-          strokeWidth={1.5}  // Espessura do traço
+          strokeWidth={1.5}
           width={20} 
           height={20} 
         />
       </TouchableOpacity>
 
-      {/* Botão da Direita: Perfil de Utilizador (onde entram os Formulários!) */}
       <View style={styles.blocoDireitoHorizontal}>
         <TouchableOpacity 
         style={styles.botaoIcone} 
@@ -42,7 +40,7 @@ export default function Footer() {
           activeOpacity={0.7}
           >
             <UserCircleIcon 
-            color="#ffffff"  // Cor do contorno do boneco a brancosize={25}
+            color="#ffffff"
           />
           </TouchableOpacity>
       </View>
@@ -58,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 60,
     paddingVertical: 6,
-    backgroundColor: '#1c1c1e', // O teu cinza escuro premium
+    backgroundColor: '#1c1c1e',
     borderTopWidth: 1,
     borderColor: '#2c2c2e',
     position: 'absolute',

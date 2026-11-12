@@ -10,28 +10,24 @@ import { ArrowRightStartOnRectangleIcon } from 'react-native-heroicons/outline';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-// Exportamos as variáveis estáticas exatamente como planeaste para a HomeScreen ler!
 export const nome = "Nuno";
 export const sobrenome = "Duarte";
 const altura = "161 cm";
 const peso = "64,1 kg";
 
 function Perfil() {
-  // CORREÇÃO 1: Ativação mestre da navegação para o botão onPress funcionar!
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <Header subtitulo='Perfil'/>
       
-      {/* CORREÇÃO 3: Adicionado ScrollView para o painel deslizar livremente e não cortar no ecrã */}
       <ScrollView 
         contentContainerStyle={styles.scrollContainer} 
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
         
-        {/* Bloco de Avatar e Dados Fisiológicos */}
         <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 10, gap: 10 }}>
           <Image
             resizeMode="cover"
@@ -42,7 +38,6 @@ function Perfil() {
           <Text style={{ fontSize: 13, color: '#aaaaaa' }}> Altura: {altura}  •  Peso: {peso}</Text>
         </View>
 
-        {/* Caixa de Estatísticas Cinzenta */}
         <View style={styles.caixaEstatisticas}>
           <View style={styles.colunaEstatistica}>
             <Text style={styles.numeroEstatistica}>12</Text>
@@ -58,7 +53,6 @@ function Perfil() {
           </View>
         </View>
 
-        {/* Opção 1: Editar Perfil */}
         <TouchableOpacity style={styles.optionCard} activeOpacity={0.7}>
           <View style={styles.blocoEsquerdoOpcao}>
             <Edit color="#45c7cc" strokeWidth={2} size={20} /> 
@@ -67,7 +61,6 @@ function Perfil() {
           <ChevronsRight color="#45c7cc" strokeWidth={2} size={20} /> 
         </TouchableOpacity>
 
-        {/* Opção 2: Notificações */}
         <TouchableOpacity style={styles.optionCard} activeOpacity={0.7}>
           <View style={styles.blocoEsquerdoOpcao}>
             <Bell color="#45c7cc" strokeWidth={2} size={20} /> 
@@ -76,7 +69,6 @@ function Perfil() {
           <ChevronsRight color="#45c7cc" strokeWidth={2} size={20} /> 
         </TouchableOpacity>
 
-        {/* Opção 3: Privacidade */}
         <TouchableOpacity style={styles.optionCard} activeOpacity={0.7}>
           <View style={styles.blocoEsquerdoOpcao}>
             <Lock color="#45c7cc" strokeWidth={2} size={20} /> 
@@ -85,7 +77,6 @@ function Perfil() {
           <ChevronsRight color="#45c7cc" strokeWidth={2} size={20} /> 
         </TouchableOpacity>
 
-        {/* Opção 4: Ajuda */}
         <TouchableOpacity style={styles.optionCard} activeOpacity={0.7}>
           <View style={styles.blocoEsquerdoOpcao}>
             <HelpCircle color="#45c7cc" strokeWidth={2} size={20} /> 
@@ -94,7 +85,7 @@ function Perfil() {
           <ChevronsRight color="#45c7cc" strokeWidth={2} size={20} /> 
         </TouchableOpacity>
       </ScrollView>
-        {/* Botão Logout (Terminar Sessão) posicionado dentro do fluxo de scroll */}
+
     <ActionFooter 
           onActionPress={() => navigation.navigate('HomeScreen')}
         Icon={ArrowRightStartOnRectangleIcon} 
@@ -115,7 +106,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingHorizontal: 24,
-    paddingBottom: 10, // Garante que o botão de Logout não fica escondido atrás do Footer
+    paddingBottom: 10,
   },
   caixaEstatisticas: {
     flexDirection: 'row',

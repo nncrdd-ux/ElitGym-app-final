@@ -5,12 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-// 🧠 A TIPAGEM DE ELITE: Adicionámos a prop 'Icon' que aceita qualquer componente de ícone
 type ActionFooterProps = {
   actionText?: string;
   onActionPress?: () => void;
   actionColor?: string;
-  Icon?: React.ComponentType<any>; // 🚀 O SEGREDO: Permite passar as tags do feather icons!
+  Icon?: React.ComponentType<any>;
 };
 
 export default function ActionFooter({ actionText, onActionPress, actionColor, Icon }: ActionFooterProps) {
@@ -19,7 +18,6 @@ export default function ActionFooter({ actionText, onActionPress, actionColor, I
   return (
     <View style={styles.barraInferiorAcao}>
       
-      {/* ⬅️ SETA DE VOLTAR FIXA À ESQUERDA */}
       <TouchableOpacity 
         style={styles.zonaBotaoVoltar} 
         onPress={() => navigation.goBack()}
@@ -28,14 +26,12 @@ export default function ActionFooter({ actionText, onActionPress, actionColor, I
         <ChevronLeft color="#fcf9f9" size={30} />
       </TouchableOpacity>
 
-      {/* ⚡ BOTÃO DE ACÇÃO DINÂMICO COM ÍCONE */}
       {actionText && onActionPress ? (
         <TouchableOpacity
           style={[styles.botaoAcaoMestre, { borderColor: actionColor || '#45c7cc' }]}
           onPress={onActionPress}
           activeOpacity={0.7}
         >
-          {/* 🧠 Se passares um Ícone, ele renderiza-o aqui mesmo ao lado do texto! */}
           {Icon && (
             <View style={{ marginRight: 6 }}>
               <Icon color={actionColor || '#45c7cc'} strokeWidth={2.5} width={18} height={18} />
@@ -72,7 +68,7 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   botaoAcaoMestre: {
-    flexDirection: 'row',       // 🧠 Alinha o ícone e o texto lado a lado na horizontal
+    flexDirection: 'row',
     backgroundColor: '#1c1c1e',
     borderWidth: 1,
     paddingVertical: 12,

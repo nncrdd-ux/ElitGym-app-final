@@ -10,24 +10,22 @@ export default function HidratacaoScreen() {
   
   const [aguaConsumida, setAguaConsumida] = useState<number>(0);
   const [valorCustomizado, setValorCustomizado] = useState<string>(''); // Estado para o TextInput
-  const metaDiaria = 2000; // 3 Litros
+  const metaDiaria = 2000;
 
   const percentagem = Math.min((aguaConsumida / metaDiaria) * 100, 100);
 
-  // 🧠 FUNÇÃO MULTI-USOS: Aceita qualquer quantidade de ml e soma com segurança usando o prev
   const adicionarAgua = (quantidade: number) => {
     if (quantidade > 0) {
       setAguaConsumida((prev) => prev + quantidade);
     }
   };
 
-  // 🧠 VALIDAÇÃO DO TEXTINPUT: Converte o texto para número e limpa o campo
   const submeterValorCustomizado = () => {
     const ml = parseInt(valorCustomizado, 10);
     if (!isNaN(ml) && ml > 0) {
       adicionarAgua(ml);
-      setValorCustomizado(''); // Limpa o input após adicionar
-      Keyboard.dismiss(); // Esconde o teclado do telemóvel automaticamente
+      setValorCustomizado('');
+      Keyboard.dismiss();
     }
   };
 

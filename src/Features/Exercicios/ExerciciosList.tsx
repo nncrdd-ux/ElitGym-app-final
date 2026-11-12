@@ -18,12 +18,10 @@ export default function ExerciciosList() {
 
   const exerciciosFiltrados = listaExerciciosGeral.filter((ex) => {
     
-    // Estrada A: Se o utilizador escolheu "Ver Todos"
     if (musculoSelecionado === 'todos') {
       return true;
     }
 
-    // Estrada B: Se o utilizador clicou num músculo específico no mapa do corpo
     if (musculoSelecionado) {
       return (
         ex.musculoprincipal === musculoSelecionado || 
@@ -31,21 +29,17 @@ export default function ExerciciosList() {
       );
     }
 
-    // Estrada C: Se o utilizador clicou num equipamento no carrossel horizontal
     if (equipamentoSelecionado) {
       const filtro = equipamentoSelecionado.toLowerCase();
       const equipamentoExercicio = ex.equipamento.toLowerCase();
       
-      // O .includes() une "barra" com "barras" com total segurança!
       return equipamentoExercicio.includes(filtro) || filtro.includes(equipamentoExercicio);
     }
 
-    // Proteção por defeito: se nada vier na mala, mostra tudo
     return true;
   });
 
   const renderItemExercicio = ({ item }: { item: ExercicioProps }) => (
-    // Ao clicar no card pequeno, viaja para o ecrã de detalhe levando o exercício selecionado
     <TouchableOpacity 
       style={styles.cardPequeno} 
       activeOpacity={0.8}

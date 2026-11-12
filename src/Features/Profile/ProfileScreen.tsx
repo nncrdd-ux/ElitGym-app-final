@@ -84,7 +84,7 @@ export default function ProfileScreen() {
           
             <TextInput 
                 style={{
-                flex: 1, // Faz o campo de texto ocupar todo o espaço esquerdo disponível
+                flex: 1,
                 color: '#ffffff',
                 padding: 14,
                 fontSize: 16,
@@ -93,24 +93,24 @@ export default function ProfileScreen() {
                 placeholderTextColor="#555555"
                 value={password}
                 onChangeText={setPassword}
-                secureTextEntry={esconderpassword === 'true'} // Usa o teu estado dinâmico!
+                secureTextEntry={esconderpassword === 'true'}
             />
             <TouchableOpacity 
                 activeOpacity={0.7} 
-                onPress={() => setEsconderpassword(prev => prev === 'true' ? 'false' : 'true')} // Alterna entre true e false!
+                onPress={() => setEsconderpassword(prev => prev === 'true' ? 'false' : 'true')}
             >
             <Image
               source={
                 esconderpassword === 'true'
-                ? require("../../../assets/esconder_password.png") // O teu ícone antigo
-                : require("../../../assets/ver_password.png")   // O teu ícone novo de olho aberto!
+                ? require("../../../assets/esconder_password.png")
+                : require("../../../assets/ver_password.png")
                 }
               style={{ width: 40, height: 40, tintColor: esconderpassword === 'true' ? '#555555' : '#45c7cc' }} // Muda de cor ao clicar!
             />
             </TouchableOpacity>
         </View>
         {erros.password ? <Text style={styles.textoErro}>{erros.password}</Text> : null}
-          {/* INPUT: CONFIRMAÇÃO PASSWORD */}
+
         <Text style={styles.label}>Confirma a Password:</Text>
         <View style={{
               flexDirection: 'row',
@@ -124,7 +124,7 @@ export default function ProfileScreen() {
           }}>  
           <TextInput 
           style={{
-                flex: 1, // Faz o campo de texto ocupar todo o espaço esquerdo disponível
+                flex: 1,
                 color: '#ffffff',
                 padding: 14,
                 fontSize: 16,
@@ -133,7 +133,7 @@ export default function ProfileScreen() {
           placeholderTextColor="#555555"
           value={passwordconfirm}
           onChangeText={setPasswordconfirm}
-          secureTextEntry={esconderpassword === 'true'} // Também podes ligar ao mesmo olho se quiseres!
+          secureTextEntry={esconderpassword === 'true'}
         />
         <TouchableOpacity 
                 activeOpacity={0.7} 
@@ -142,10 +142,10 @@ export default function ProfileScreen() {
             <Image
               source={
                 esconderpassword === 'true'
-                ? require("../../../assets/esconder_password.png") // O teu ícone antigo
-                : require("../../../assets/ver_password.png")   // O teu ícone novo de olho aberto!
+                ? require("../../../assets/esconder_password.png")
+                : require("../../../assets/ver_password.png")
                 }
-              style={{ width: 40, height: 40, tintColor: esconderpassword === 'true' ? '#555555' : '#45c7cc' }} // Muda de cor ao clicar!
+              style={{ width: 40, height: 40, tintColor: esconderpassword === 'true' ? '#555555' : '#45c7cc' }}
             />
         </TouchableOpacity>
         </View>
@@ -162,6 +162,6 @@ const styles = StyleSheet.create({
   container: { backgroundColor: '#000000', padding: 24, paddingTop: 10, paddingBottom: 30 },
   label: { color: '#aaaaaa', fontSize: 14, marginBottom: 8, marginTop: 4 },
   input: { backgroundColor: '#1c1c1e', color: '#ffffff', padding: 14, borderRadius: 12, marginBottom: 12, fontSize: 16, borderWidth: 1, borderColor: '#2c2c2e' },
-  inputErro: { borderColor: '#ff4d4d' }, // Borda vermelha de erro
+  inputErro: { borderColor: '#ff4d4d' },
   textoErro: { color: '#ff4d4d', fontSize: 12, marginBottom: 12, marginTop: -4, fontWeight: '600' } // Mensagem de erro vermelha
 });

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { ChevronDown, ChevronRight, ChevronUp } from 'react-native-feather';
-// 🧠 IMPORTAMOS O MOTOR DE GESTOS PARA DENTRO DO COMPONENTE REUTILIZÁVEL
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable'; // 🧠 VOLTAMOS AO REANIMATED OFICIAL!
 
 type AccordionProps = {
@@ -13,8 +12,6 @@ type AccordionProps = {
 
 export default function Accordion({ titulo, subtitulo, children, renderRightActions }: AccordionProps) {
   const [isOpen, setIsOpen] = useState(false);
-
-  // Se passarmos ações de arraste, ativa o Swipeable apenas nesta barra superior!
   const renderHeaderConteudo = () => (
     <TouchableOpacity 
       style={[styles.header, isOpen ? styles.headerAtivo : null]} 
@@ -37,7 +34,6 @@ export default function Accordion({ titulo, subtitulo, children, renderRightActi
   return (
     <View style={styles.contentorAccordion}>
       
-      {/* 🧠 O SEGREDO ABSOLUTO: Se houver ações de swipe, embrulha APENAS o cabeçalho! */}
       {renderRightActions ? (
         <Swipeable renderRightActions={renderRightActions} friction={2} rightThreshold={40}>
           {renderHeaderConteudo()}
@@ -46,7 +42,6 @@ export default function Accordion({ titulo, subtitulo, children, renderRightActi
         renderHeaderConteudo()
       )}
 
-      {/* GAVETA DOS EXERCÍCIOS: Fica completamente FORA do Swipeable, 100% fixa e estável! */}
       {isOpen && (
         <View style={styles.painelConteudo}>
           {children}

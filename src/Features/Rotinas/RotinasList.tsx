@@ -168,22 +168,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,                    // Espaçamento entre as bolinhas
-    paddingVertical: 10,       // Afasta os pontos do boneco e do rodapé
+    gap: 8,                    
+    paddingVertical: 10,      
     backgroundColor: '#000000',
   },
   pontoBola: {
     width: 8,
     height: 8,
-    borderRadius: 4,           // Transforma o quadrado num círculo perfeito!
+    borderRadius: 4,           
   },
   pontoBolaAtivo: {
-    backgroundColor: '#45c7cc', // O teu azul elétrico brilha na página ativa!
-    width: 10,                  // Fica ligeiramente maior para dar destaque
+    backgroundColor: '#45c7cc', 
+    width: 10,                  
     height: 10,
     borderRadius: 5,
   },
   pontoBolaInativo: {
-    backgroundColor: '#555555', // Cinza escuro discreto para a página escondida
+    backgroundColor: '#555555',
   },
 });

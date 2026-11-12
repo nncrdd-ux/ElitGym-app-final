@@ -14,7 +14,6 @@ export default function DetalheExercicio() {
   const { exercicio } = route.params;
 
   const adicionarAoPlano = () => {
-    // Lógica futura: salvar o exercício no estado global ou AsyncStorage do plano
     alert(`${exercicio.titulo} adicionado ao teu plano com sucesso!`);
   };
 
@@ -52,7 +51,6 @@ export default function DetalheExercicio() {
           <Text style={styles.textoExecucao}>{exercicio.execucao}</Text>
         </View>
 
-        {/* O BOTÃO DO PROFESSOR: Customizado para a ação do plano */}
         <View style={styles.botaoContainer}>
           <AppButton 
             title="➕ Adicionar ao Meu Plano" 

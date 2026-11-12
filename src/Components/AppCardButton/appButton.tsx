@@ -8,8 +8,6 @@ type AppButtonProps = {
 const AppButton = ({ title, onPress }: AppButtonProps) => {
   return (
     <>
-      {/* Button nativo com diferenças visuais entre Android e iOS */}
-      {/* <Button title="Click Me"/>  */}
       <TouchableOpacity
         activeOpacity={0.7}
         style={{

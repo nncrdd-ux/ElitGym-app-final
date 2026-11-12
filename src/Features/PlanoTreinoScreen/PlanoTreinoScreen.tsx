@@ -38,12 +38,10 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation }: a
     return (
       <View style={styles.blocoBotoesSwipeHorizontal}>
         
-        {/* BOTÃO 1: EDITAR (Fundo Cinzento/Azul Premium) */}
         <TouchableOpacity 
           style={styles.containerSwipe}
           activeOpacity={0.8}
           onPress={() => {
-            // Salta para o teu ecrã de detalhes ou formulário de edição levando a rotina!
             navigation.navigate('DetalheRotina', { rotina: rotina });
           }}
         >
@@ -52,12 +50,10 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation }: a
           </View>
         </TouchableOpacity>
 
-        {/* BOTÃO 2: APAGAR / CRUZ (Fundo Vermelho de Elite) */}
         <TouchableOpacity 
           style={styles.containerSwipe}
           activeOpacity={0.8}
           onPress={() => {
-            // Retira o visto de selecionada no teu App.tsx instantaneamente
             setRotinas((prev: any) => 
               prev.map((r: any) => r.id === rotina.id ? { ...r, selecionada: false } : r)
             );
@@ -85,7 +81,6 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation }: a
         marginTop: 25,
         }}>
 
-        {/* LISTA PRINCIPAL DO PLANO DE TREINO */}
         <FlatList
           data={rotinasAtivas}
           keyExtractor={(item) => 'plano-rotina-' + item.id}
@@ -142,7 +137,6 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation }: a
             </Text>
           }
         />
-        {/* Botão para acrescentar treinos */}
         <ActionFooter 
           onActionPress={() => navigation.navigate('RotinasList')}
           Icon={PlusSquare}
@@ -186,18 +180,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: 80,
-    height: '100%',               // Acompanha o esticamento automático do pai
+    height: '100%',
   },
     blocoBotoesSwipeHorizontal: {
     flexDirection: 'row',
     width: 160,
-    height: '100%', // Reage à altura exata apenas da barra do cabeçalho!
+    height: '100%',
   },
   linhaMestreCard: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#1c1c1e',
-    paddingRight: 14, // Dá espaço para o botão de Play respirar
+    paddingRight: 14,
   },
   zonaBotaoPlayCard: {
     paddingVertical: 14,
