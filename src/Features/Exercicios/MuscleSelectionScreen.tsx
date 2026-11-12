@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text, ScrollView, Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Image, TouchableOpacity, Text, ScrollView, Dimensions, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import Header from '../../Components/Header/Header';
 import { ChevronLeft, Edit, Trash } from 'react-native-feather';
 import AppCardButton from '../../Components/AppCardButton/AppCardButton';
+import ActionFooter from '../../Components/Footer/ActionFooter';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'MuscleSelectionScreen'>;
 
@@ -24,7 +25,19 @@ export default function MuscleSelectionScreen({ navigation }: any) {
   { imagem: require("../../../assets/maquinas.jpg"), label: "Máquinas" },
   { imagem: require("../../../assets/peso_corporal.png"), label: "Peso Corporal" },  
   ];
-
+  const [paginaAtual, setPaginaAtual] = useState(0);
+useEffect(() => {
+  Alert.alert(
+    "💡 Dica de Elite",
+    "Podes selecionar os teus exercícios tocando nas zonas do corpo inteiro. \n\n👉 Se quiseres filtrar por tipo de Equipamento, basta deslizares (scroll) para o lado!",
+    [
+      { 
+        text: "Percebido!", 
+        onPress: () => console.log("Utilizador leu as instruções.") 
+      }
+    ]
+  );
+}, []);
   return (
   <View style={styles.mainContainer}>
       <Header subtitulo="Zonas de Treino" />
@@ -33,10 +46,18 @@ export default function MuscleSelectionScreen({ navigation }: any) {
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 pagingEnabled={true}
+                scrollEventThrottle={16}
+                onScroll={(event) => {
+                  const posicaoX = event.nativeEvent.contentOffset.x;
+                  const indiceCalculado = Math.round(posicaoX / SCREEN_WIDTH);
+                  if (indiceCalculado !== paginaAtual) {
+                    setPaginaAtual(indiceCalculado);
+                  }
+                }}
                 >
           {/* MAPA DO CORPO */}
         <View style={[styles.mapaContainer , { width: SCREEN_WIDTH }]}>
-          <Text style={styles.tituloInstrucao}>Escolhe o grupo muscular que queres treinar:</Text>
+          <Text style={styles.tituloInstrucao}>Escolhe o grupo muscular que queres treinar tocando na imagem:</Text>
 
           <Image 
             source={require('../../../assets/corpo_inteiro_2.png')} 
@@ -107,44 +128,42 @@ export default function MuscleSelectionScreen({ navigation }: any) {
             title={e.label}
             imageSource={e.imagem} 
             onPress={() => {
-              setEquipamentoAceso(e.label.toLowerCase());
-              setMusculoAceso(null);
-              }}
-              />
+              navigation.navigate('ExerciciosList', {
+                equipamentoSelecionado: e.label.toLowerCase() 
+              });
+            }}
+          />
           ))}
         </View>
        </ScrollView>
+      
       </View>
-      <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingVertical: 10, position: 'relative' }}>
-        <ChevronLeft
-          style={{ position: 'absolute', left: 15, zIndex: 10}}
-          color="#fcf9f9"
-          size={30}
-          onPress={() => navigation.goBack()}
-          />
-        <TouchableOpacity
-          style={styles.botaoVerTodos}
-          onPress={() => {
-        // Decide para onde vai com base no que está ativo!
-          if (musculoAceso) {
-          navigation.navigate('ExerciciosList', { musculoSelecionado: musculoAceso });
-        } else if (equipamentoAceso) {
-          navigation.navigate('ExerciciosList', { equipamentoSelecionado: equipamentoAceso });
-        } else {
-          navigation.navigate('ExerciciosList', { musculoSelecionado: 'todos' });
-        }
-  }}
->
-  <Text style={styles.textoVerTodos}>
-    {musculoAceso
-      ? `Ver Exercícios de ${musculoAceso.toUpperCase()}`
-      : equipamentoAceso
-        ? `Ver Exercícios de ${equipamentoAceso.toUpperCase()}`
-        : "Ver Todos os Exercícios"
-    }
-  </Text>
-</TouchableOpacity>       
-      </View>
+       <View style={styles.contentorPontosPagina}>
+  
+    <View style={[
+    styles.pontoBola, 
+    paginaAtual === 0 ? styles.pontoBolaAtivo : styles.pontoBolaInativo
+  ]} />
+
+  <View style={[
+    styles.pontoBola, 
+    paginaAtual === 1 ? styles.pontoBolaAtivo : styles.pontoBolaInativo
+  ]} />
+
+  </View>
+      <ActionFooter
+          onActionPress={() => {
+            if (paginaAtual === 0 && musculoAceso) {
+           navigation.navigate('ExerciciosList', { musculoSelecionado: musculoAceso });
+            } else {
+            navigation.navigate('ExerciciosList', { musculoSelecionado: 'todos' });
+            }
+          }}
+          actionText={paginaAtual === 0 && musculoAceso
+          ? `Ver Exercícios de ${musculoAceso.toUpperCase()}`
+          : "Ver Todos os Exercícios"
+          }
+      />
     </View>
   );
     
@@ -200,5 +219,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',  
     position: 'relative',
     gap: 10,
+  },
+   contentorPontosPagina: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,                    // Espaçamento entre as bolinhas
+    paddingVertical: 10,       // Afasta os pontos do boneco e do rodapé
+    backgroundColor: '#000000',
+  },
+  pontoBola: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,           // Transforma o quadrado num círculo perfeito!
+  },
+  pontoBolaAtivo: {
+    backgroundColor: '#45c7cc', // O teu azul elétrico brilha na página ativa!
+    width: 10,                  // Fica ligeiramente maior para dar destaque
+    height: 10,
+    borderRadius: 5,
+  },
+  pontoBolaInativo: {
+    backgroundColor: '#555555', // Cinza escuro discreto para a página escondida
   },
 });

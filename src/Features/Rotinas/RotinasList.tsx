@@ -20,6 +20,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 export default function RotinasList({ rotinas, setRotinas, navigation }: any) {
     
     const [filtro, setFiltro] = useState<Filtro>("todas");
+    const [paginaAtual, setPaginaAtual] = useState(0);
     const rotinasVisiveis = (tipoFiltro: Filtro) => {
     if (filtro === "inativas") {
       return rotinas.filter((routine: RotinaProps) => !routine.selecionada);
@@ -68,8 +69,16 @@ export default function RotinasList({ rotinas, setRotinas, navigation }: any) {
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ flexDirection: 'row'}}>
-
+          contentContainerStyle={{ flexDirection: 'row'}}
+          scrollEventThrottle={16}
+                onScroll={(event) => {
+                  const posicaoX = event.nativeEvent.contentOffset.x;
+                  const indiceCalculado = Math.round(posicaoX / SCREEN_WIDTH);
+                  if (indiceCalculado !== paginaAtual) {
+                    setPaginaAtual(indiceCalculado);
+                  }
+                }}
+                >
             <View style={[styles.paginaCarrossel, { width: SCREEN_WIDTH }]}>
               <Header subtitulo="Lista de Rotinas Inativas"/>
               <View style={{width: '100%', paddingTop: 30, marginTop: 40}}>
@@ -100,6 +109,7 @@ export default function RotinasList({ rotinas, setRotinas, navigation }: any) {
             </View>
 
         </ScrollView>
+         <View style={styles.contentorPontosPagina}></View>
         <View style={{ position: 'absolute', bottom: 20, left: 24, zIndex: 99 }}>
           <ChevronLeft
             color="#fcf9f9"
@@ -152,5 +162,27 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingTop: 10,
+  },
+  contentorPontosPagina: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,                    // Espaçamento entre as bolinhas
+    paddingVertical: 10,       // Afasta os pontos do boneco e do rodapé
+    backgroundColor: '#000000',
+  },
+  pontoBola: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,           // Transforma o quadrado num círculo perfeito!
+  },
+  pontoBolaAtivo: {
+    backgroundColor: '#45c7cc', // O teu azul elétrico brilha na página ativa!
+    width: 10,                  // Fica ligeiramente maior para dar destaque
+    height: 10,
+    borderRadius: 5,
+  },
+  pontoBolaInativo: {
+    backgroundColor: '#555555', // Cinza escuro discreto para a página escondida
   },
 });

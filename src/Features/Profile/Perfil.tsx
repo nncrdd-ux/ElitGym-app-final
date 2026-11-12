@@ -5,8 +5,10 @@ import { useNavigation } from '@react-navigation/native'; // CORREÇÃO: Import 
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { Bell, ChevronsRight, HelpCircle, Edit, Lock } from 'react-native-feather'; 
+import { Bell, ChevronsRight, HelpCircle, Edit, Lock, LogOut } from 'react-native-feather'; 
 import { ArrowRightStartOnRectangleIcon } from 'react-native-heroicons/outline'; 
+import ActionFooter from '../../Components/Footer/ActionFooter';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Exportamos as variáveis estáticas exatamente como planeaste para a HomeScreen ler!
 export const nome = "Nuno";
@@ -19,7 +21,7 @@ function Perfil() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
-    <View style={styles.mainContainer}>
+    <SafeAreaView style={styles.mainContainer}>
       <Header subtitulo='Perfil'/>
       
       {/* CORREÇÃO 3: Adicionado ScrollView para o painel deslizar livremente e não cortar no ecrã */}
@@ -93,16 +95,14 @@ function Perfil() {
         </TouchableOpacity>
       </ScrollView>
         {/* Botão Logout (Terminar Sessão) posicionado dentro do fluxo de scroll */}
-    <TouchableOpacity 
-          style={styles.botaoLogout}
-          onPress={() => navigation.navigate('HomeScreen')}
-          activeOpacity={0.7}
-    >
-        <ArrowRightStartOnRectangleIcon color="#ff4d4d" size={22} />
-        <Text style={styles.textoLogout}>Terminar Sessão</Text>
-    </TouchableOpacity>
+    <ActionFooter 
+          onActionPress={() => navigation.navigate('HomeScreen')}
+        Icon={LogOut} 
+        actionColor="#ff4d4d"
+        actionText="Terminar Sessão"
+    />
 
-    </View>
+    </SafeAreaView>
   );
 }
 

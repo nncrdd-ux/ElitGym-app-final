@@ -5,6 +5,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import Header from '../../Components/Header/Header';
 import { listaExerciciosGeral, ExercicioProps } from './Exercicios';
+import ActionFooter from '../../Components/Footer/ActionFooter';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type RouteProps = RouteProp<RootStackParamList, 'ExerciciosList'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'ExerciciosList'>;
@@ -59,7 +61,7 @@ export default function ExerciciosList() {
   );
 
   return (
-    <View style={styles.mainContainer}>
+    <SafeAreaView style={styles.mainContainer}>
       <Header subtitulo={
         musculoSelecionado 
       ? `Treino de ${musculoSelecionado.toUpperCase()}`
@@ -68,10 +70,6 @@ export default function ExerciciosList() {
         : "Catálogo de Exercícios"
       }
         />
-
-      <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()} activeOpacity={0.7}>
-        <Text style={styles.textoVoltar}>⬅️ Voltar atrás</Text>
-      </TouchableOpacity>
 
       <FlatList
         data={exerciciosFiltrados}
@@ -82,7 +80,8 @@ export default function ExerciciosList() {
           <Text style={styles.listaVazia}>Nenhum exercício registado.</Text>
         }
       />
-    </View>
+      <ActionFooter/>
+    </SafeAreaView>
   );
 }
 

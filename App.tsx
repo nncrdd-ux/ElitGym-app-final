@@ -16,15 +16,17 @@ import {listaRotinasGeral} from './src/Features/Rotinas/Rotinas';
 import { useState } from 'react';
 import PlanoTreinoScreen from './src/Features/PlanoTreinoScreen/PlanoTreinoScreen';
 import HidratationScreen from './src/Features/Hidratation/HidratationScreen';
+import { colorsDark, colorsLight, fontSize } from './src/theme/theme';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   const [rotinas, setRotinas] = useState(listaRotinasGeral);
+   const [darkmode, setDarkmode] = useState(true);
   
   return (
     <View style={styles.container}>
-      <StatusBar style="light" />
+      <StatusBar style={darkmode ? 'light': 'dark'} />
 
       <NavigationContainer>
         <Stack.Navigator initialRouteName="HomeScreen">
@@ -73,11 +75,18 @@ export default function App() {
             component={Perfil}
             options={{ headerShown: false }} 
           />
-          <Stack.Screen 
-            name="SettingsScreen"
-            component={SettingsScreen}
-            options={{ headerShown: false }} 
-          />
+          <Stack.Screen
+          name="SettingsScreen"
+          options={{ headerShown: false }}>
+            {(props) => (
+              <SettingsScreen
+              {...props}
+              darkmode={darkmode}
+              setDarkmode={setDarkmode}
+              />
+            )}
+            
+          </Stack.Screen>
           <Stack.Screen 
             name="DetalheRotina"
             component={DetalheRotina}

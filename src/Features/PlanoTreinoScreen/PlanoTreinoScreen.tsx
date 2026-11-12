@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {listaRotinasGeral, RotinaProps} from '../Rotinas/Rotinas';
 import { RootStackParamList } from '../../Navigation/types';
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -13,6 +13,7 @@ import { ChevronLeft, Edit, PlayCircle, PlusSquare, X} from 'react-native-feathe
 import Accordion from '../../Components/Accordin/Accordion';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable'; // 🧠 VOLTAMOS AO REANIMATED OFICIAL!
+import ActionFooter from '../../Components/Footer/ActionFooter';
 
 type RouteProps = RouteProp<RootStackParamList, 'PlanoTreinoScreen'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'PlanoTreinoScreen'>;
@@ -21,8 +22,19 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation }: any) {
     const rotinasAtivas = rotinas ? rotinas.filter((r: RotinaProps) => r.selecionada) : [];
+    const [subtituloDinamico, setSubtituloDinamico] = useState("O Teu Plano de Elite");
     const renderBotaoEscondidoDireita = (progress: any, dragX: any, rotina: any) => {
-
+      useEffect(() => {
+    const quantidade = rotinasAtivas.length;
+    
+    if (quantidade === 0) {
+      setSubtituloDinamico("Nenhum treino agendado");
+    } else if (quantidade === 1) {
+      setSubtituloDinamico("Tens 1 treino de Elite agendado");
+    } else {
+      setSubtituloDinamico(`Tens ${quantidade} treinos de Elite agendados`);
+    }
+  }, [rotinas]);
     return (
       <View style={styles.blocoBotoesSwipeHorizontal}>
         
@@ -64,7 +76,7 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation }: a
    return (
     <GestureHandlerRootView style={{ flex: 1}}>
     <SafeAreaView style={styles.mainContainer}>
-      <Header subtitulo="O Teu Plano de Elite" />
+      <Header subtitulo={subtituloDinamico} />
 
       <View style={{ 
         flex: 1,
@@ -131,14 +143,12 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation }: a
           }
         />
         {/* Botão para acrescentar treinos */}
-        <TouchableOpacity 
-          style={styles.botaoAcrescentar}
-          onPress={() => navigation.navigate('RotinasList')}
-          activeOpacity={0.7}
-        >
-          <PlusSquare color="#45c7cc" strokeWidth={2.5} width={18} height={18} />
-          <Text style={styles.textoBotaoAcrescentar}>Acrescentar Rotina(s)</Text>
-        </TouchableOpacity>
+        <ActionFooter 
+          onActionPress={() => navigation.navigate('RotinasList')}
+          Icon={PlusSquare}
+          actionColor="#45c7cc"
+          actionText='Acrescentar Rotina(s)'
+        />
       </View>
     </SafeAreaView>
    </GestureHandlerRootView> 

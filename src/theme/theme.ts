@@ -19,3 +19,22 @@ export const fontSize = {
   medium: 16,
   large: 24,
 };
+export const getTheme = (darkmode: boolean) => {
+  const colors = darkmode ? colorsDark : colorsLight;
+
+  return {
+    colors: colors,
+    fontSize: fontSize,
+    spacing: {
+      small: 8,
+      medium: 16,
+      large: 24,
+    },
+    globalStyles: {
+      mainContainer: {
+        flex: 1,
+        backgroundColor: colors.background
+      }
+    }
+  };
+};

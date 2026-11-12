@@ -51,11 +51,12 @@ export default function HidratacaoScreen() {
                 resizeMode="contain"
               />
             </View>
-            <View style={styles.blocoTextoFlutuante}>
+            
+          </View>
+          <View style={styles.blocoTextoFlutuante}>
               <Text style={styles.textoLitros}>{(aguaConsumida / 1000).toFixed(2)} L</Text>
               <Text style={styles.textoPercentagem}>{percentagem.toFixed(0)}%</Text>
             </View>
-          </View>
 
           {/* ================= ZONA DE ENTRADA DE DADOS ================= */}
           <View style={styles.blocoControlo}>
@@ -140,11 +141,12 @@ const styles = StyleSheet.create({
     position: 'relative',
     justifyContent: 'center',
     alignSelf: 'center',
+    flex: 1,
   },
   bonecoBase: { width: '100%', height: '100%', opacity: 0.15 },
   contentorAguaSubtil: { position: 'absolute', bottom: 0, left: 0, width: '100%', overflow: 'hidden' },
   bonecoAzulPreenchido: { width: '100%', height: undefined, aspectRatio: 2 / 3.5, position: 'absolute', bottom: 0 },
-  blocoTextoFlutuante: { position: 'absolute', width: '100%', justifyContent: 'center', alignItems: 'center', zIndex: 10 },
+  blocoTextoFlutuante: { position: 'relative', width: '100%', justifyContent: 'center', alignItems: 'center', zIndex: 10 },
   textoLitros: { color: '#ffffff', fontSize: 32, fontWeight: 'bold' },
   textoPercentagem: { color: '#45c7cc', fontSize: 16, fontWeight: 'bold', marginTop: 4 },
   
