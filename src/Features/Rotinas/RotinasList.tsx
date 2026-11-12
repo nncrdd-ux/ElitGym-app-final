@@ -7,7 +7,8 @@ import { Dimensions, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, V
 import Header from '../../Components/Header/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeft, Edit, Trash } from 'react-native-feather';
-import Checkbox from "expo-checkbox"; 
+import Checkbox from "expo-checkbox";
+import { SquaresPlusIcon } from 'react-native-heroicons/outline'; 
 
 
 type Filtro = "todas" | "ativas" | "inativas";

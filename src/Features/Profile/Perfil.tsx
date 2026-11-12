@@ -97,7 +97,7 @@ function Perfil() {
         {/* Botão Logout (Terminar Sessão) posicionado dentro do fluxo de scroll */}
     <ActionFooter 
           onActionPress={() => navigation.navigate('HomeScreen')}
-        Icon={LogOut} 
+        Icon={ArrowRightStartOnRectangleIcon} 
         actionColor="#ff4d4d"
         actionText="Terminar Sessão"
     />
