@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Switch, StyleSheet } from 'react-native';
 import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
-import { getTheme } from '../../theme/theme'; // 🧠 Puxamos a nossa função geradora
+import { getTheme } from '../../theme/theme';
 
 export default function SettingsScreen({ darkmode, setDarkmode }: any) {
   
