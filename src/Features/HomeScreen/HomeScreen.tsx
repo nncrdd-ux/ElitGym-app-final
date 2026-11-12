@@ -5,7 +5,7 @@ import { RootStackParamList } from '../../Navigation/types';
 import Header from '../../Components/Header/Header';
 import AppCardButton from '../../Components/AppCardButton/AppCardButton';
 import Footer from '../../Components/Footer/Footer';
-import { nome } from '../Profile/Perfil'; // Ajusta o caminho da pasta se for preciso!
+import { nome } from '../Profile/Perfil';
 
 type NavigationProps = NativeStackScreenProps<RootStackParamList, "HomeScreen">;
 
