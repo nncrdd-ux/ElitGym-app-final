@@ -6,7 +6,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import { listaExerciciosGeral } from '../Exercicios/Exercicios'; 
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChevronLeft, Edit} from 'react-native-feather'; 
+import { ChevronLeft, Edit} from 'react-native-feather';
+import { SquaresPlusIcon } from 'react-native-heroicons/outline';
 
 type RouteProps = RouteProp<RootStackParamList, 'DetalheRotina'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRotina'>;
@@ -48,6 +49,14 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRoti
                     );
                 }}
             />
+            <TouchableOpacity style={{flex: 1, position:'relative', marginBottom: 200, alignItems:'flex-end', marginRight: 20}}
+             activeOpacity={0.7}
+             onPress={() => navigation.navigate ('MuscleSelectionScreen')}>
+            <SquaresPlusIcon 
+            color="#45c7cc" 
+            size={25}
+            />
+            </TouchableOpacity>
         </View>
         <View style={{flexDirection: 'row',
             width: '100%',
