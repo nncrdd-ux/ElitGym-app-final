@@ -45,15 +45,29 @@ export default function App() {
           
           <Stack.Screen 
             name="ExerciciosList"
-            component={ExerciciosList} 
-            options={{ headerShown: false }} 
-          />
+            options={{ headerShown: false }}
+            >
+              {(props) => (
+              <ExerciciosList 
+              {...props} 
+              rotinas={rotinas} 
+              setRotinas={setRotinas} 
+              />
+            )}
+          </Stack.Screen>
 
           <Stack.Screen 
             name="DetalheExercicio"
-            component={DetalheExercicio} 
             options={{ headerShown: false }} 
-          />
+           >
+              {(props) => (
+              <DetalheExercicio 
+              {...props} 
+              rotinas={rotinas} 
+              setRotinas={setRotinas} 
+              />
+            )}
+          </Stack.Screen>
           <Stack.Screen 
             name="ProfileScreen"
             component={ProfileScreen} 
