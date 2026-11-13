@@ -12,7 +12,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import { ChevronLeft, Edit, PlayCircle, PlusSquare, X} from 'react-native-feather';
 import Accordion from '../../Components/Accordin/Accordion';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable'; // 🧠 VOLTAMOS AO REANIMATED OFICIAL!
+import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 
 type RouteProps = RouteProp<RootStackParamList, 'PlanoTreinoScreen'>;
