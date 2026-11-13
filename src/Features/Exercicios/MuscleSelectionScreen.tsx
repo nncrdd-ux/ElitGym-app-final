@@ -156,9 +156,15 @@ useEffect(() => {
       <ActionFooter
           onActionPress={() => {
             if (paginaAtual === 0 && musculoAceso) {
-           navigation.navigate('ExerciciosList', { musculoSelecionado: musculoAceso });
+           navigation.navigate('ExerciciosList', {
+             musculoSelecionado: musculoAceso,
+             rotinaParaEditarId: rotinaParaEditarId
+           });
             } else {
-            navigation.navigate('ExerciciosList', { musculoSelecionado: 'todos' });
+            navigation.navigate('ExerciciosList', {
+              musculoSelecionado: 'todos',
+              rotinaParaEditarId: rotinaParaEditarId
+            });
             }
           }}
           actionText={paginaAtual === 0 && musculoAceso
