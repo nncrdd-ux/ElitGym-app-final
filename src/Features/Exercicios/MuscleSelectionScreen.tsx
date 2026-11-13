@@ -12,7 +12,8 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'MuscleSelec
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-export default function MuscleSelectionScreen({ navigation }: any) {
+export default function MuscleSelectionScreen({ navigation, route }: any) {
+  const rotinaParaEditarId = route?.params?.rotinaParaEditarId;
   const [musculoAceso, setMusculoAceso] = useState<string | null>(null);
   const [equipamentoAceso, setEquipamentoAceso] = useState<string | null>(null);
 
@@ -129,7 +130,8 @@ useEffect(() => {
             imageSource={e.imagem} 
             onPress={() => {
               navigation.navigate('ExerciciosList', {
-                equipamentoSelecionado: e.label.toLowerCase() 
+                equipamentoSelecionado: e.label.toLowerCase(),
+                rotinaParaEditarId: rotinaParaEditarId
               });
             }}
           />
