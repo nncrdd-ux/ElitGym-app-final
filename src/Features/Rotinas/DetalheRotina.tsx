@@ -51,7 +51,9 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRoti
             />
             <TouchableOpacity style={{flex: 1, position:'relative', marginBottom: 200, alignItems:'flex-end', marginRight: 20}}
              activeOpacity={0.7}
-             onPress={() => navigation.navigate ('MuscleSelectionScreen')}>
+             navigation.navigate('MuscleSelection', { rotinaParaEditarId: rotina?.id });
+             }}
+            >
             <SquaresPlusIcon 
             color="#45c7cc" 
             size={25}
