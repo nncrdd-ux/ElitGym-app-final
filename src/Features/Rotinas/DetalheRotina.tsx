@@ -12,9 +12,9 @@ import { SquaresPlusIcon } from 'react-native-heroicons/outline';
 type RouteProps = RouteProp<RootStackParamList, 'DetalheRotina'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRotina'>;
 
- export default function DetalheRotina() {
+ export default function DetalheRotina({ rotinas }: any) {
   const route = useRoute<RouteProps>();
-  const navigation = useNavigation<NavigationProp>();
+  const navigation = useNavigation<any>();
   const rotina = route.params?.rotina;
 
   return (
@@ -51,8 +51,9 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRoti
             />
             <TouchableOpacity style={{flex: 1, position:'relative', marginBottom: 200, alignItems:'flex-end', marginRight: 20}}
              activeOpacity={0.7}
-             navigation.navigate('MuscleSelection', { rotinaParaEditarId: rotina?.id });
-             }}
+             onPress={() => {
+                navigation.navigate('MuscleSelection', { rotinaParaEditarId: rotina?.id });
+              }}
             >
             <SquaresPlusIcon 
             color="#45c7cc" 
