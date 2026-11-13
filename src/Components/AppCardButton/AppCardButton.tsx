@@ -41,9 +41,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 20,
   },
-  imageOverlay: {
-    resizeMode: 'cover',
-  },
   textContainer: {
     justifyContent: 'center',
     backgroundColor: 'transparent',
