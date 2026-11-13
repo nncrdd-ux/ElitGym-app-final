@@ -15,8 +15,9 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRoti
  export default function DetalheRotina({ rotinas }: any) {
   const route = useRoute<RouteProps>();
   const navigation = useNavigation<any>();
-  const rotina = route.params?.rotina;
-
+  const rotinaInicial = route.params?.rotina;
+  const rotina = rotinas?.find((r: any) => r.id === rotinaInicial?.id) || rotinaInicial;
+  
   return (
     <SafeAreaView style={styles.mainContainer}>
             <Header subtitulo={rotina?.titulo} />
