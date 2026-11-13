@@ -11,10 +11,33 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 type RouteProps = RouteProp<RootStackParamList, 'ExerciciosList'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'ExerciciosList'>;
 
-export default function ExerciciosList() {
-  const route = useRoute<RouteProps>();
-  const navigation = useNavigation<NavigationProp>();
-  const { musculoSelecionado, equipamentoSelecionado } = route.params;
+export default function ExerciciosList({ rotinas, setRotinas }: any) {
+  const route = useRoute<any>();
+  const navigation = useNavigation<any>();
+  const { musculoSelecionado, equipamentoSelecionado, rotinaParaEditarId } = route.params || {};
+  const rotinaEmEdicao = rotinas?.find((r: any) => r.id === rotinaParaEditarId);
+  const rotinaEmEdicao = rotinas?.find((r: any) => r.id === rotinaParaEditarId);
+  const aoAlternarExercicioNaRotina = (idExercicio: string) => {
+    if (!rotinaParaEditarId || !setRotinas) return;
+
+    setRotinas((prev: any[]) =>
+      prev.map((rot) => {
+        if (rot.id === rotinaParaEditarId) {
+          const exerciciosAtuais = rot.exercicios || [];
+          const jaExiste = exerciciosAtuais.includes(idExercicio);
+
+          // Se já está na rotina, remove; se não está, adiciona ao fim da lista
+          const novosExercicios = jaExiste
+            ? exerciciosAtuais.filter((id: string) => id !== idExercicio)
+            : [...exerciciosAtuais, idExercicio];
+
+          return { ...rot, exercicios: novosExercicios };
+        }
+        return rot;
+      })
+    );
+  };
+
 
   const exerciciosFiltrados = listaExerciciosGeral.filter((ex) => {
     
@@ -39,12 +62,22 @@ export default function ExerciciosList() {
     return true;
   });
 
-  const renderItemExercicio = ({ item }: { item: ExercicioProps }) => (
-    <TouchableOpacity 
-      style={styles.cardPequeno} 
-      activeOpacity={0.8}
-      onPress={() => navigation.navigate('DetalheExercicio', { exercicio: item })}
-    >
+  const renderItemExercicio = ({ item }: { item: ExercicioProps }) => {
+    // Verifica se este exercício já faz parte da rotina em edição
+    const estaSelecionado = rotinaEmEdicao?.exercicios?.includes(item.id);
+
+    return (
+      <TouchableOpacity 
+        style={styles.cardPequeno} 
+        activeOpacity={0.8}
+        onPress={() => {
+          if (rotinaParaEditarId) {
+            aoAlternarExercicioNaRotina(item.id);
+          } else {
+            navigation.navigate('DetalheExercicio', { exercicio: item });
+          }
+        }}
+      >
       <Image source={{ uri: item.imagemUrl }} style={styles.imagemMini} />
       <View style={styles.textoContainer}>
         <Text style={styles.tituloExercicio}>{item.titulo}</Text>
