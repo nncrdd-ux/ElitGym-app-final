@@ -25,8 +25,6 @@ export default function ExerciciosList({ rotinas, setRotinas }: any) {
         if (rot.id === rotinaParaEditarId) {
           const exerciciosAtuais = rot.exercicios || [];
           const jaExiste = exerciciosAtuais.includes(idExercicio);
-
-          // Se já está na rotina, remove; se não está, adiciona ao fim da lista
           const novosExercicios = jaExiste
             ? exerciciosAtuais.filter((id: string) => id !== idExercicio)
             : [...exerciciosAtuais, idExercicio];
@@ -63,7 +61,6 @@ export default function ExerciciosList({ rotinas, setRotinas }: any) {
   });
 
   const renderItemExercicio = ({ item }: { item: ExercicioProps }) => {
-    // Verifica se este exercício já faz parte da rotina em edição
     const estaSelecionado = rotinaEmEdicao?.exercicios?.includes(item.id);
 
     return (
@@ -83,10 +80,16 @@ export default function ExerciciosList({ rotinas, setRotinas }: any) {
         <Text style={styles.tituloExercicio}>{item.titulo}</Text>
         <Text style={styles.subtituloExercicio}>⚙️ {item.equipamento.toUpperCase()}</Text>
       </View>
-      <Text style={styles.setaIndicadora}>➡️</Text>
-    </TouchableOpacity>
-  );
-
+     {rotinaParaEditarId ? (
+          <View style={[styles.checkboxBase, estaSelecionado && styles.checkboxAtiva]}>
+            {estaSelecionado && <Text style={styles.vistoTexto}>✓</Text>}
+          </View>
+        ) : (
+          <Text style={styles.setaIndicadora}>➡️</Text>
+        )}
+      </TouchableOpacity>
+    );
+  };
   return (
     <SafeAreaView style={styles.mainContainer}>
       <Header subtitulo={
@@ -107,7 +110,14 @@ export default function ExerciciosList({ rotinas, setRotinas }: any) {
           <Text style={styles.listaVazia}>Nenhum exercício registado.</Text>
         }
       />
-      <ActionFooter/>
+      <ActionFooter 
+        actionText={rotinaParaEditarId ? "Concluir Seleção" : undefined}
+        onActionPress={
+          rotinaParaEditarId 
+            ? () => navigation.navigate('DetalheRotina', { rotina: rotinaEmEdicao }) 
+            : undefined
+        }
+      />
     </SafeAreaView>
   );
 }
