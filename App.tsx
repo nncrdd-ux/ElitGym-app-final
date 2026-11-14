@@ -22,7 +22,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   const [rotinas, setRotinas] = useState(listaRotinasGeral);
-   const [darkmode, setDarkmode] = useState(true);
+  const [darkmode, setDarkmode] = useState(true);
   
   return (
     <View style={styles.container}>
@@ -45,15 +45,29 @@ export default function App() {
           
           <Stack.Screen 
             name="ExerciciosList"
-            component={ExerciciosList} 
-            options={{ headerShown: false }} 
-          />
+            options={{ headerShown: false }}
+            >
+              {(props) => (
+              <ExerciciosList 
+              {...props} 
+              rotinas={rotinas} 
+              setRotinas={setRotinas} 
+              />
+            )}
+          </Stack.Screen>
 
           <Stack.Screen 
             name="DetalheExercicio"
-            component={DetalheExercicio} 
             options={{ headerShown: false }} 
-          />
+           >
+              {(props) => (
+              <DetalheExercicio 
+              {...props} 
+              rotinas={rotinas} 
+              setRotinas={setRotinas} 
+              />
+            )}
+          </Stack.Screen>
           <Stack.Screen 
             name="ProfileScreen"
             component={ProfileScreen} 
@@ -87,11 +101,17 @@ export default function App() {
             )}
             
           </Stack.Screen>
-          <Stack.Screen 
-            name="DetalheRotina"
-            component={DetalheRotina}
-            options={{ headerShown: false }} 
-          />
+          <Stack.Screen
+          name="DetalheRotina"
+          options={{ headerShown: false }}>
+            {(props) => (
+              <DetalheRotina 
+                {...props} 
+                rotinas={rotinas} 
+                setRotinas={setRotinas} 
+              />
+          )}
+          </Stack.Screen>
           <Stack.Screen 
           name="PlanoTreinoScreen"
           options={{ headerShown: false }}>

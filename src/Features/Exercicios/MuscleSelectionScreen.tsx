@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import Header from '../../Components/Header/Header';
-import { ChevronLeft, Edit, Trash } from 'react-native-feather';
 import AppCardButton from '../../Components/AppCardButton/AppCardButton';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 
@@ -12,7 +11,8 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'MuscleSelec
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-export default function MuscleSelectionScreen({ navigation }: any) {
+export default function MuscleSelectionScreen({ navigation, route }: any) {
+  const rotinaParaEditarId = route?.params?.rotinaParaEditarId;
   const [musculoAceso, setMusculoAceso] = useState<string | null>(null);
   const [equipamentoAceso, setEquipamentoAceso] = useState<string | null>(null);
 
@@ -129,7 +129,8 @@ useEffect(() => {
             imageSource={e.imagem} 
             onPress={() => {
               navigation.navigate('ExerciciosList', {
-                equipamentoSelecionado: e.label.toLowerCase() 
+                equipamentoSelecionado: e.label.toLowerCase(),
+                rotinaParaEditarId: rotinaParaEditarId 
               });
             }}
           />
@@ -154,9 +155,15 @@ useEffect(() => {
       <ActionFooter
           onActionPress={() => {
             if (paginaAtual === 0 && musculoAceso) {
-           navigation.navigate('ExerciciosList', { musculoSelecionado: musculoAceso });
+           navigation.navigate('ExerciciosList',
+            { musculoSelecionado: musculoAceso,
+              rotinaParaEditarId: rotinaParaEditarId
+             });
             } else {
-            navigation.navigate('ExerciciosList', { musculoSelecionado: 'todos' });
+            navigation.navigate('ExerciciosList', { 
+              musculoSelecionado: 'todos',
+              rotinaParaEditarId: rotinaParaEditarId
+             });
             }
           }}
           actionText={paginaAtual === 0 && musculoAceso

@@ -8,7 +8,7 @@ import AppButton from '../../Components/AppCardButton/appButton';
 type RouteProps = RouteProp<RootStackParamList, 'DetalheExercicio'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheExercicio'>;
 
-export default function DetalheExercicio() {
+export default function DetalheExercicio({ rotinas, setRotinas }: any) {
   const route = useRoute<RouteProps>();
   const navigation = useNavigation<NavigationProp>();
   const { exercicio } = route.params;

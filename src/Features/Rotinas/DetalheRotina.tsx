@@ -1,21 +1,35 @@
-import { View, Text , StyleSheet, FlatList, Image, TouchableOpacity} from 'react-native'
-import React from 'react'
+import { View, Text , StyleSheet, FlatList, Image, TouchableOpacity, Modal, TextInput } from 'react-native'
+import React, { useState } from 'react'
 import Header from '../../Components/Header/Header'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import { listaExerciciosGeral } from '../Exercicios/Exercicios'; 
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChevronLeft, Edit} from 'react-native-feather';
+import { ChevronLeft, Edit } from 'react-native-feather';
 import { SquaresPlusIcon } from 'react-native-heroicons/outline';
+import ActionFooter from '../../Components/Footer/ActionFooter';
 
 type RouteProps = RouteProp<RootStackParamList, 'DetalheRotina'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRotina'>;
 
- export default function DetalheRotina() {
+ export default function DetalheRotina({ rotinas, setRotinas }: any) {
   const route = useRoute<RouteProps>();
-  const navigation = useNavigation<NavigationProp>();
-  const rotina = route.params?.rotina;
+  const navigation = useNavigation<any>();
+  const rotinaInicial = route.params?.rotina;
+  const rotina = rotinas?.find((r: any) => r.id === rotinaInicial?.id) || rotinaInicial;
+  const [modalEditarVisivel, setModalEditarVisivel] = useState(false);
+  const [novoTitulo, setNovoTitulo] = useState(rotina?.titulo || '');
+  
+  const aoSalvarNovoTitulo = () => {
+  if (!novoTitulo.trim() || !setRotinas || !rotina) return;
+
+  setRotinas((prev: any[]) =>
+    prev.map((r) => (r.id === rotina.id ? { ...r, titulo: novoTitulo.trim() } : r))
+  );
+
+  setModalEditarVisivel(false);
+};
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -23,7 +37,10 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRoti
             <Edit style={{ position: 'absolute', top: 60, right: 20 }} 
                 color="#fcf9f9"
                 size={24}
-                onPress={() => navigation.goBack()}
+                onPress={() => {
+                    setNovoTitulo(rotina?.titulo || '');
+                    setModalEditarVisivel(true);
+                }}
             />
         <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 10 }}>
             <FlatList
@@ -49,33 +66,70 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRoti
                     );
                 }}
             />
-            <TouchableOpacity style={{flex: 1, position:'relative', marginBottom: 200, alignItems:'flex-end', marginRight: 20}}
+            <TouchableOpacity style={{
+                alignSelf: 'flex-end',
+                padding: 12,
+                marginTop: 10,
+            }}
              activeOpacity={0.7}
-             onPress={() => navigation.navigate ('MuscleSelectionScreen')}>
+                   onPress={() => {
+                navigation.navigate('MuscleSelectionScreen', { rotinaParaEditarId: rotina?.id });
+              }}
+            >
             <SquaresPlusIcon 
             color="#45c7cc" 
-            size={25}
+            size={28}
             />
             </TouchableOpacity>
         </View>
-        <View style={{flexDirection: 'row',
-            width: '100%',
-            alignItems: 'center',
-            paddingHorizontal: 30,
-            paddingVertical: 6,
-            position: 'absolute',
-            bottom: 45,
-            left: 0,
-            gap: 25,}}>
-            <ChevronLeft 
-                color="#fcf9f9"
-                size={24}
-                onPress={() => navigation.goBack()}
+        <ActionFooter 
+          actionColor="#45c7cc"
+          actionText='Adicionar ao Plano de Treino'
+          onActionPress={() => {
+            if (!setRotinas || !rotina) return;
+            setRotinas((prev: any[]) =>
+                prev.map((r) => (r.id === rotina.id ? {...r, selecionada: true} : r))
+        );
+        navigation.navigate('PlanoTreinoScreen')
+    }}
+    />
+    <Modal
+        visible={modalEditarVisivel}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setModalEditarVisivel(false)}
+      >
+        <View style={styles.modalFundo}>
+          <View style={styles.modalCaixa}>
+            <Text style={styles.modalTitulo}>Editar Nome da Rotina</Text>
+            
+            <TextInput
+              style={styles.modalInput}
+              value={novoTitulo}
+              onChangeText={setNovoTitulo}
+              placeholder="Nome da rotina..."
+              placeholderTextColor="#666666"
+              autoFocus={true}
             />
-            <TouchableOpacity style={{ paddingVertical: 10, paddingHorizontal: 20, borderRadius: 15, backgroundColor: '#1c1c1e', flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{ color: '#ffffff', fontSize: 14, fontWeight: 'bold' }}>Adicionar ao Plano e Treino</Text>
-            </TouchableOpacity>
+
+            <View style={styles.modalBotoes}>
+              <TouchableOpacity 
+                style={styles.botaoCancelar} 
+                onPress={() => setModalEditarVisivel(false)}
+              >
+                <Text style={styles.textoCancelar}>Cancelar</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity 
+                style={styles.botaoGuardar} 
+                onPress={aoSalvarNovoTitulo}
+              >
+                <Text style={styles.textoGuardar}>Guardar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
+      </Modal>
     </SafeAreaView>
   )
 }
@@ -90,5 +144,61 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#2c2c2e',
+  },
+  modalFundo: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  modalCaixa: {
+    width: '100%',
+    backgroundColor: '#1c1c1e',
+    borderRadius: 16,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: '#2c2c2e',
+  },
+  modalTitulo: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 15,
+  },
+  modalInput: {
+    backgroundColor: '#000000',
+    color: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#45c7cc',
+    borderRadius: 10,
+    padding: 12,
+    fontSize: 16,
+    marginBottom: 20,
+  },
+  modalBotoes: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 12,
+  },
+  botaoCancelar: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: '#2c2c2e',
+  },
+  textoCancelar: {
+    color: '#aaaaaa',
+    fontWeight: '600',
+  },
+  botaoGuardar: {
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 8,
+    backgroundColor: '#45c7cc',
+  },
+  textoGuardar: {
+    color: '#000000',
+    fontWeight: 'bold',
   },
 });

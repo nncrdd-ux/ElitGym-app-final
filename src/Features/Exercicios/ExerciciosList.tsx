@@ -7,14 +7,34 @@ import Header from '../../Components/Header/Header';
 import { listaExerciciosGeral, ExercicioProps } from './Exercicios';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ChevronsLeft, ChevronsRight } from 'react-native-feather';
 
 type RouteProps = RouteProp<RootStackParamList, 'ExerciciosList'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'ExerciciosList'>;
 
-export default function ExerciciosList() {
-  const route = useRoute<RouteProps>();
-  const navigation = useNavigation<NavigationProp>();
-  const { musculoSelecionado, equipamentoSelecionado } = route.params;
+export default function ExerciciosList({ rotinas, setRotinas }: any) {
+  const route = useRoute<any>();
+  const navigation = useNavigation<any>();
+  const { musculoSelecionado, equipamentoSelecionado, rotinaParaEditarId } = route.params ||{};
+  const rotinaEmEdicao = rotinas?.find((r: any) => r.id === rotinaParaEditarId);
+  const aoAlternarExercicioNaRotina = (idExercicio: string) => {
+    if (!rotinaParaEditarId || !setRotinas) return;
+
+    setRotinas((prev: any[]) =>
+      prev.map((rot) => {
+        if (rot.id === rotinaParaEditarId) {
+          const exerciciosAtuais = rot.exercicios || [];
+          const jaExiste = exerciciosAtuais.includes(idExercicio);
+          const novosExercicios = jaExiste
+            ? exerciciosAtuais.filter((id: string) => id !== idExercicio)
+            : [...exerciciosAtuais, idExercicio];
+
+          return { ...rot, exercicios: novosExercicios };
+        }
+        return rot;
+      })
+    );
+  };
 
   const exerciciosFiltrados = listaExerciciosGeral.filter((ex) => {
     
@@ -39,20 +59,36 @@ export default function ExerciciosList() {
     return true;
   });
 
-  const renderItemExercicio = ({ item }: { item: ExercicioProps }) => (
+  const renderItemExercicio = ({ item }: { item: ExercicioProps }) => {
+    const estaSelecionado = rotinaEmEdicao?.exercicios?.includes(item.id);
+    return (
     <TouchableOpacity 
       style={styles.cardPequeno} 
       activeOpacity={0.8}
-      onPress={() => navigation.navigate('DetalheExercicio', { exercicio: item })}
-    >
+       onPress={() => {
+          if (rotinaParaEditarId) {
+            aoAlternarExercicioNaRotina(item.id);
+          } else {
+            navigation.navigate('DetalheExercicio', { exercicio: item });
+          }
+        }}
+      >
       <Image source={{ uri: item.imagemUrl }} style={styles.imagemMini} />
       <View style={styles.textoContainer}>
         <Text style={styles.tituloExercicio}>{item.titulo}</Text>
         <Text style={styles.subtituloExercicio}>⚙️ {item.equipamento.toUpperCase()}</Text>
       </View>
-      <Text style={styles.setaIndicadora}>➡️</Text>
+      {rotinaParaEditarId ? (
+          <View style={[styles.checkboxBase, estaSelecionado && styles.checkboxAtiva]}>
+            {estaSelecionado && <Text style={styles.vistoTexto}>✓</Text>}
+          </View>
+        ) : (
+          <ChevronsLeft
+          color="#ffffff" strokeWidth={2} width={20} height={20}/>
+        )}
+      <ChevronsRight color="#ffffff" strokeWidth={2} width={20} height={20}/>
     </TouchableOpacity>
-  );
+  )};
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -74,7 +110,14 @@ export default function ExerciciosList() {
           <Text style={styles.listaVazia}>Nenhum exercício registado.</Text>
         }
       />
-      <ActionFooter/>
+      <ActionFooter 
+        actionText={rotinaParaEditarId ? "Concluir Seleção" : undefined}
+        onActionPress={
+          rotinaParaEditarId 
+            ? () => navigation.navigate('DetalheRotina', { rotina: rotinaEmEdicao }) 
+            : undefined
+        }
+      />
     </SafeAreaView>
   );
 }
@@ -100,4 +143,22 @@ const styles = StyleSheet.create({
   subtituloExercicio: { color: '#aaaaaa', fontSize: 12, marginTop: 4 },
   setaIndicadora: { color: '#45c7cc', fontSize: 16, marginRight: 4 },
   listaVazia: { color: '#aaaaaa', textAlign: 'center', marginTop: 40, fontSize: 16 },
+  checkboxBase: {
+    width: 26,
+    height: 26,
+    borderRadius: 6,
+    borderWidth: 2,
+    borderColor: '#45c7cc',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10,
+  },
+  checkboxAtiva: {
+    backgroundColor: '#45c7cc',
+  },
+  vistoTexto: {
+    color: '#000000',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
 });
