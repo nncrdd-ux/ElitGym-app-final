@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, ImageBackground, StyleSheet, View } from 'react-native';
+import { TouchableOpacity, Text, Image, StyleSheet, View } from 'react-native';
 
 type AppCardButtonProps = {
   title: string;
@@ -11,10 +11,10 @@ type AppCardButtonProps = {
 const AppCardButton = ({ title, subtitle, imageSource, onPress }: AppCardButtonProps) => {
   return (
     <TouchableOpacity style={styles.cardContainer} activeOpacity={0.85} onPress={onPress}>
-      <ImageBackground
+      <Image
         source={imageSource}
-        style={styles.backgroundImage}
-        imageStyle={styles.imageOverlay}
+        style={[StyleSheet.absoluteFillObject, { width: '100%', height: '100%' }]}
+        resizeMode="cover"
       >
         <View style={styles.textContainer}>
           <Text style={styles.cardTitle}>{title}</Text>
@@ -40,9 +40,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-  },
-  imageOverlay: {
-    resizeMode: 'cover',
   },
   textContainer: {
     justifyContent: 'center',
