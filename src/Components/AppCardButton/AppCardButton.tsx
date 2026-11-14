@@ -13,14 +13,13 @@ const AppCardButton = ({ title, subtitle, imageSource, onPress }: AppCardButtonP
     <TouchableOpacity style={styles.cardContainer} activeOpacity={0.85} onPress={onPress}>
       <Image
         source={imageSource}
-        style={[StyleSheet.absoluteFillObject, { width: '100%', height: '100%' }]}
+       style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
         resizeMode="cover"
-      >
+      />
         <View style={styles.textContainer}>
           <Text style={styles.cardTitle}>{title}</Text>
           <Text style={styles.cardSubtitle}>{subtitle}</Text>
         </View>
-      </ImageBackground>
     </TouchableOpacity>
   );
 };

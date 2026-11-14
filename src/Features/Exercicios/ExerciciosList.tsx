@@ -118,14 +118,6 @@ export default function ExerciciosList({ rotinas, setRotinas }: any) {
             : undefined
         }
       />
-      <ActionFooter 
-        actionText={rotinaParaEditarId ? "Concluir Seleção" : undefined}
-        onActionPress={
-          rotinaParaEditarId 
-            ? () => navigation.navigate('DetalheRotina', { rotina: rotinaEmEdicao }) 
-            : undefined
-        }
-      />
     </SafeAreaView>
   );
 }
