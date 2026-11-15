@@ -14,13 +14,15 @@ import Accordion from '../../Components/Accordin/Accordion';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import ActionFooter from '../../Components/Footer/ActionFooter';
+import { getTheme } from '../../theme/theme';
 
 type RouteProps = RouteProp<RootStackParamList, 'PlanoTreinoScreen'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'PlanoTreinoScreen'>;
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation }: any) {
+export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation, darkmode }: any) {
+    const theme = getTheme(darkmode);
     const rotinasAtivas = rotinas ? rotinas.filter((r: RotinaProps) => r.selecionada) : [];
     const [subtituloDinamico, setSubtituloDinamico] = useState("O Teu Plano de Elite");
     const renderBotaoEscondidoDireita = (progress: any, dragX: any, rotina: any) => {
@@ -70,8 +72,8 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation }: a
 
 
    return (
-    <GestureHandlerRootView style={{ flex: 1}}>
-    <SafeAreaView style={styles.mainContainer}>
+    <GestureHandlerRootView style={{ flex: 1, width: '100%'}}>
+    <SafeAreaView style={theme.globalStyles.mainContainer}>
       <Header subtitulo={subtituloDinamico} />
 
       <View style={{ 
@@ -137,20 +139,20 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation }: a
             </Text>
           }
         />
-        <ActionFooter 
+      </View>
+      <ActionFooter 
           onActionPress={() => navigation.navigate('RotinasList')}
           Icon={PlusSquare}
           actionColor="#45c7cc"
           actionText='Acrescentar Rotina(s)'
         />
-      </View>
     </SafeAreaView>
    </GestureHandlerRootView> 
   );
 }
 
 const styles = StyleSheet.create({
-  mainContainer: { flex: 1, backgroundColor: '#000000' },
+
   botaoAcrescentar: {
     flexDirection: 'row', backgroundColor: '#1c1c1e', borderWidth: 1, borderColor: '#45c7cc',
     paddingVertical: 14, borderRadius: 12, alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 20, marginTop: 10,

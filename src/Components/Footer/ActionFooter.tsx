@@ -57,9 +57,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12, 
     position: 'relative',
     backgroundColor: '#000000',
-    borderTopWidth: 1,
-    borderColor: '#1c1c1e',
-    paddingHorizontal: 20,
   },
   zonaBotaoVoltar: {
     position: 'absolute', 

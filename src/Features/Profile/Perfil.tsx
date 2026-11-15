@@ -9,17 +9,19 @@ import { Bell, ChevronsRight, HelpCircle, Edit, Lock, LogOut } from 'react-nativ
 import { ArrowRightStartOnRectangleIcon } from 'react-native-heroicons/outline'; 
 import ActionFooter from '../../Components/Footer/ActionFooter';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { fontSize, getTheme } from '../../theme/theme';
 
 export const nome = "Nuno";
 export const sobrenome = "Duarte";
 const altura = "161 cm";
 const peso = "64,1 kg";
 
-function Perfil() {
+function Perfil({darkmode}: any) {
+  const theme = getTheme(darkmode);
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
+    <SafeAreaView style={theme.globalStyles.mainContainer}>
       <Header subtitulo='Perfil'/>
       
       <ScrollView 
@@ -34,8 +36,8 @@ function Perfil() {
             style={{ width: 130, height: 130, borderRadius: 100 }}
             source={require("../../../assets/avatar.jpg")}
           />
-          <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#ffffff' }}> {nome} {sobrenome} </Text>
-          <Text style={{ fontSize: 13, color: '#aaaaaa' }}> Altura: {altura}  •  Peso: {peso}</Text>
+          <Text style={{ fontSize: fontSize.large, fontWeight: 'bold', color: theme.colors.text }}> {nome} {sobrenome} </Text>
+          <Text style={{ fontSize: fontSize.small, color: '#aaaaaa' }}> Altura: {altura}  •  Peso: {peso}</Text>
         </View>
 
         <View style={styles.caixaEstatisticas}>
@@ -98,12 +100,6 @@ function Perfil() {
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: '#000000',
-    justifyContent: 'space-between',
-    paddingBottom: 20,
-  },
   scrollContainer: {
     paddingHorizontal: 24,
     paddingBottom: 10,

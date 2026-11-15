@@ -6,15 +6,18 @@ import { RootStackParamList } from '../../Navigation/types';
 import Header from '../../Components/Header/Header';
 import AppCardButton from '../../Components/AppCardButton/AppCardButton';
 import ActionFooter from '../../Components/Footer/ActionFooter';
+import { getTheme } from '../../theme/theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'MuscleSelectionScreen'>;
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-export default function MuscleSelectionScreen({ navigation, route }: any) {
+export default function MuscleSelectionScreen({ navigation, route, darkmode }: any) {
   const rotinaParaEditarId = route?.params?.rotinaParaEditarId;
   const [musculoAceso, setMusculoAceso] = useState<string | null>(null);
   const [equipamentoAceso, setEquipamentoAceso] = useState<string | null>(null);
+  const theme = getTheme(darkmode);
 
   const aoPressionarMusculo = (musculo: string) => {
     setMusculoAceso(prev => prev === musculo ? null : musculo);
@@ -39,7 +42,7 @@ useEffect(() => {
   );
 }, []);
   return (
-  <View style={styles.mainContainer}>
+  <SafeAreaView style={theme.globalStyles.mainContainer}>
       <Header subtitulo="Zonas de Treino" />
       <View style={{flexDirection: 'row'}}>
         <ScrollView
@@ -172,18 +175,12 @@ useEffect(() => {
           : "Ver Todos os Exercícios"
           }
       />
-    </View>
+    </SafeAreaView>
   );
     
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: '#000000',
-    alignItems: 'center',
-    paddingTop: 20,
-  },
   tituloInstrucao: {
     color: '#aaaaaa',
     fontSize: 14,
@@ -234,7 +231,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,                    
     paddingVertical: 10,       
-    backgroundColor: '#000000',
   },
   pontoBola: {
     width: 8,

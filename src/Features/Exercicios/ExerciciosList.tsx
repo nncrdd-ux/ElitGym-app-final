@@ -8,11 +8,13 @@ import { listaExerciciosGeral, ExercicioProps } from './Exercicios';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronsLeft, ChevronsRight } from 'react-native-feather';
+import { getTheme } from '../../theme/theme';
 
 type RouteProps = RouteProp<RootStackParamList, 'ExerciciosList'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'ExerciciosList'>;
 
-export default function ExerciciosList({ rotinas, setRotinas }: any) {
+export default function ExerciciosList({ rotinas, setRotinas, darkmode }: any) {
+  const theme = getTheme(darkmode);
   const route = useRoute<any>();
   const navigation = useNavigation<any>();
   const { musculoSelecionado, equipamentoSelecionado, rotinaParaEditarId } = route.params ||{};
@@ -83,15 +85,14 @@ export default function ExerciciosList({ rotinas, setRotinas }: any) {
             {estaSelecionado && <Text style={styles.vistoTexto}>✓</Text>}
           </View>
         ) : (
-          <ChevronsLeft
+          <ChevronsRight
           color="#ffffff" strokeWidth={2} width={20} height={20}/>
         )}
-      <ChevronsRight color="#ffffff" strokeWidth={2} width={20} height={20}/>
     </TouchableOpacity>
   )};
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
+    <SafeAreaView style={theme.globalStyles.mainContainer}>
       <Header subtitulo={
         musculoSelecionado 
       ? `Treino de ${musculoSelecionado.toUpperCase()}`
@@ -123,17 +124,14 @@ export default function ExerciciosList({ rotinas, setRotinas }: any) {
 }
 
 const styles = StyleSheet.create({
-  mainContainer: { flex: 1, backgroundColor: '#000000' },
-  botaoVoltar: { alignSelf: 'flex-start', marginLeft: 20, marginTop: 10, marginBottom: 10, paddingVertical: 6, paddingHorizontal: 12, backgroundColor: '#1c1c1e', borderRadius: 8 },
-  textoVoltar: { color: '#ffffff', fontSize: 14, fontWeight: '600' },
-  listaContainer: { paddingHorizontal: 20, paddingBottom: 30 },
+  listaContainer: { paddingHorizontal: 10, paddingBottom: 30 },
   cardPequeno: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#1c1c1e',
     borderRadius: 12,
     padding: 12,
-    marginBottom: 12,
+    marginVertical: 10,
     borderWidth: 1,
     borderColor: '#2c2c2e',
   },

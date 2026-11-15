@@ -29,69 +29,98 @@ export default function App() {
       <StatusBar style={darkmode ? 'light': 'dark'} />
 
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="HomeScreen">
+        <Stack.Navigator 
+        initialRouteName="HomeScreen"
+        screenOptions={{ headerShown: false }}
+        >
           
           <Stack.Screen 
             name="HomeScreen" 
-            component={HomeScreen} 
-            options={{ headerShown: false }} 
-          />
+            >
+            {(props) => (
+              <HomeScreen
+              {...props}
+              darkmode={darkmode}
+              />
+            )}
+            
+          </Stack.Screen>
           
           <Stack.Screen 
             name="MuscleSelectionScreen"
-            component={MuscleSelectionScreen} 
-            options={{ headerShown: false }} 
-          />
-          
+           >
+            {(props) => (
+              <MuscleSelectionScreen
+              {...props}
+              darkmode={darkmode}
+              />
+            )}
+            
+          </Stack.Screen>
+
           <Stack.Screen 
             name="ExerciciosList"
-            options={{ headerShown: false }}
             >
               {(props) => (
               <ExerciciosList 
               {...props} 
               rotinas={rotinas} 
-              setRotinas={setRotinas} 
+              setRotinas={setRotinas}
+              darkmode={darkmode} 
               />
             )}
           </Stack.Screen>
 
           <Stack.Screen 
             name="DetalheExercicio"
-            options={{ headerShown: false }} 
            >
               {(props) => (
               <DetalheExercicio 
               {...props} 
               rotinas={rotinas} 
-              setRotinas={setRotinas} 
+              setRotinas={setRotinas}
+              darkmode={darkmode}
               />
             )}
           </Stack.Screen>
           <Stack.Screen 
             name="ProfileScreen"
-            component={ProfileScreen} 
-            options={{ headerShown: false }} 
-          />
+            >
+            {(props) => (
+              <ProfileScreen
+              {...props}
+              darkmode={darkmode}
+              />
+            )}
+            
+          </Stack.Screen>
           <Stack.Screen
           name="RotinasList"
-          options={{ headerShown: false }}>
+          >
             {(props) => (
               <RotinasList 
                 {...props} 
                 rotinas={rotinas} 
-                setRotinas={setRotinas} 
+                setRotinas={setRotinas}
+                darkmode={darkmode}
               />
           )}
           </Stack.Screen>
           <Stack.Screen 
             name="Perfil"
-            component={Perfil}
-            options={{ headerShown: false }} 
-          />
+            >
+            {(props) => (
+              <Perfil
+              {...props}
+              darkmode={darkmode}
+              />
+            )}
+            
+          </Stack.Screen>
+
           <Stack.Screen
           name="SettingsScreen"
-          options={{ headerShown: false }}>
+          >
             {(props) => (
               <SettingsScreen
               {...props}
@@ -103,31 +132,39 @@ export default function App() {
           </Stack.Screen>
           <Stack.Screen
           name="DetalheRotina"
-          options={{ headerShown: false }}>
+          >
             {(props) => (
               <DetalheRotina 
                 {...props} 
                 rotinas={rotinas} 
-                setRotinas={setRotinas} 
+                setRotinas={setRotinas}
+                darkmode={darkmode} 
               />
           )}
           </Stack.Screen>
           <Stack.Screen 
           name="PlanoTreinoScreen"
-          options={{ headerShown: false }}>
+          >
             {(props) => (
               <PlanoTreinoScreen 
                 {...props} 
                 rotinas={rotinas}
-                setRotinas={setRotinas} 
+                setRotinas={setRotinas}
+                darkmode={darkmode} 
               />
         )}
           </Stack.Screen>
           <Stack.Screen 
             name="HidratationScreen"
-            component={HidratationScreen}
-            options={{ headerShown: false }} 
-          />
+            >
+            {(props) => (
+              <HidratationScreen
+              {...props}
+              darkmode={darkmode}
+              />
+            )}
+            
+          </Stack.Screen>
 
         </Stack.Navigator>
       </NavigationContainer>

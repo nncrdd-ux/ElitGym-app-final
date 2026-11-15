@@ -1,18 +1,24 @@
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
-import React from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
+import React, { useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import Header from '../../Components/Header/Header';
 import AppCardButton from '../../Components/AppCardButton/AppCardButton';
 import Footer from '../../Components/Footer/Footer';
 import { nome } from '../Profile/Perfil';
+import { getTheme, fontSize } from '../../theme/theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type NavigationProps = NativeStackScreenProps<RootStackParamList, "HomeScreen">;
 
-const HomeScreen = ({ navigation }: NavigationProps) => {
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
+const HomeScreen = ({ navigation, darkmode }: any) => {
+  const theme = getTheme(darkmode);
+  const [paginaAtual, setPaginaAtual] = useState(0);
 
   return (
-    <View style={styles.mainContainer}>
+    <SafeAreaView style={theme.globalStyles.mainContainer}>
       <View style={{
               flexDirection: 'row',
               width: '100%',
@@ -20,6 +26,7 @@ const HomeScreen = ({ navigation }: NavigationProps) => {
               alignItems: 'center',
               paddingHorizontal: 20,
               marginTop: 10,
+              backgroundColor: '#000000'
                     }}>
         <Image 
           source={require('../../../assets/logo_ElitGym.png')} 
@@ -39,7 +46,7 @@ const HomeScreen = ({ navigation }: NavigationProps) => {
         </View>
     </View>
       <View style={styles.boasVindasContainer}>
-        <Text style={styles.textoOla}>
+        <Text style={{fontSize: fontSize.large, color: theme.colors.text }}>
           Olá, <Text style={styles.textoNome}>{nome}</Text>!
         </Text>
       </View>
@@ -47,7 +54,15 @@ const HomeScreen = ({ navigation }: NavigationProps) => {
           <ScrollView
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            pagingEnabled={true}            
+            pagingEnabled={true}
+                scrollEventThrottle={16}
+                onScroll={(event) => {
+                  const posicaoX = event.nativeEvent.contentOffset.x;
+                  const indiceCalculado = Math.round(posicaoX / SCREEN_WIDTH);
+                  if (indiceCalculado !== paginaAtual) {
+                    setPaginaAtual(indiceCalculado);
+                  }
+                }}           
           >
             <View style={styles.cardMotivacional}>
               <Text style={styles.textoCard}> "O único treino mau é aquele que não aconteceu." </Text>
@@ -59,6 +74,23 @@ const HomeScreen = ({ navigation }: NavigationProps) => {
               <Text style={styles.textoCard}> "Já treinaste hoje? Com o ElitGym podes construir o teu plano para teres um treino de Elite!!!" </Text>
             </View>
           </ScrollView>
+          <View style={styles.contentorPontosPagina}>
+            
+              <View style={[
+              styles.pontoBola, 
+              paginaAtual === 0 ? styles.pontoBolaAtivo : styles.pontoBolaInativo
+            ]} />
+          
+            <View style={[
+              styles.pontoBola, 
+              paginaAtual === 1 ? styles.pontoBolaAtivo : styles.pontoBolaInativo
+            ]} />
+            <View style={[
+              styles.pontoBola, 
+              paginaAtual === 2 ? styles.pontoBolaAtivo : styles.pontoBolaInativo
+            ]} />
+          
+            </View>
         </View>
 
       <View style={styles.menuContainer}>
@@ -86,25 +118,15 @@ const HomeScreen = ({ navigation }: NavigationProps) => {
 
       </View>
       <Footer/>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: '#000000',
-    alignItems: 'center',
-    paddingTop: 40,
-  },
   boasVindasContainer: {
     alignItems: 'center',
     marginVertical: 30,
     paddingHorizontal: 20,
-  },
-  textoOla: {
-    color: '#ffffff',
-    fontSize: 20,
   },
   textoNome: {
     fontWeight: 'bold',
@@ -112,10 +134,9 @@ const styles = StyleSheet.create({
   },
   textoCard: {
     color: '#aaaaaa',
-    fontSize: 14,
+    fontSize: fontSize.small,
     fontStyle: 'italic',
     textAlign: 'center',
-    marginTop: 8,
   },
   menuContainer: {
     width: '100%',
@@ -127,7 +148,7 @@ const styles = StyleSheet.create({
     width: 340,
     height: 75,
     alignItems: 'center',
-    padding: 15,
+    padding: 10,
     borderRadius: 12,
     marginHorizontal: 10,
   },
@@ -135,6 +156,27 @@ const styles = StyleSheet.create({
     height: 100,
     marginVertical: 15,
     },
+    contentorPontosPagina: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,                    
+    paddingVertical: 10,      
+  },
+  pontoBola: {
+    width: 6,
+    height: 6,
+    borderRadius: 4,           
+  },
+  pontoBolaAtivo: {
+    backgroundColor: '#45c7cc',
+    width: 8,                  
+    height: 8,
+    borderRadius: 5,
+  },
+  pontoBolaInativo: {
+    backgroundColor: '#555555', 
+  },
 });
 
 export default HomeScreen;

@@ -9,6 +9,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeft, Edit, Trash } from 'react-native-feather';
 import Checkbox from "expo-checkbox";
 import { SquaresPlusIcon } from 'react-native-heroicons/outline'; 
+import { getTheme } from '../../theme/theme';
+import ActionFooter from '../../Components/Footer/ActionFooter';
 
 
 type Filtro = "todas" | "ativas" | "inativas";
@@ -18,8 +20,8 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'RotinasList
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-export default function RotinasList({ rotinas, setRotinas, navigation }: any) {
-    
+export default function RotinasList({ rotinas, setRotinas, navigation, darkmode }: any) {
+    const theme = getTheme(darkmode);
     const [filtro, setFiltro] = useState<Filtro>("todas");
     const [paginaAtual, setPaginaAtual] = useState(0);
     const rotinasVisiveis = (tipoFiltro: Filtro) => {
@@ -65,8 +67,8 @@ export default function RotinasList({ rotinas, setRotinas, navigation }: any) {
     )}
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
-      <View style={{ flex: 1, backgroundColor: '#000000', position: 'relative' }}>
+    <SafeAreaView style={theme.globalStyles.mainContainer}>
+      <View style={{flex: 1, position: 'relative', width: '100%' }}>
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -82,7 +84,7 @@ export default function RotinasList({ rotinas, setRotinas, navigation }: any) {
                 >
             <View style={[styles.paginaCarrossel, { width: SCREEN_WIDTH }]}>
               <Header subtitulo="Lista de Rotinas Inativas"/>
-              <View style={{width: '100%', paddingTop: 30, marginTop: 40}}>
+              <View style={{flex: 1, width: '100%', paddingHorizontal: 20, paddingTop: 30, marginTop: 40  }}>
                 <FlatList
                   data={rotinas.filter((routine: RotinaProps) => !routine.selecionada)}
                   keyExtractor={(item) => 'inativa-' + item.id}
@@ -96,7 +98,7 @@ export default function RotinasList({ rotinas, setRotinas, navigation }: any) {
             </View>
             <View style={[styles.paginaCarrossel, { width: SCREEN_WIDTH }]}>
               <Header subtitulo="Lista de todas as Rotinas"/>
-              <View style={{width: '100%', paddingTop: 30, marginTop: 40}}>
+              <View style={{flex: 1, width: '100%', paddingHorizontal: 20, paddingTop: 30, marginTop: 40 }}>
                 <FlatList
                   data={rotinas}
                   keyExtractor={(item) => 'todas-' + item.id}
@@ -110,15 +112,20 @@ export default function RotinasList({ rotinas, setRotinas, navigation }: any) {
             </View>
 
         </ScrollView>
-         <View style={styles.contentorPontosPagina}></View>
-        <View style={{ position: 'absolute', bottom: 20, left: 24, zIndex: 99 }}>
-          <ChevronLeft
-            color="#fcf9f9"
-            size={30}
-            onPress={() => navigation.goBack()}
-          />
-        </View>
+         <View style={styles.contentorPontosPagina}>
+          <View style={[
+              styles.pontoBola, 
+              paginaAtual === 0 ? styles.pontoBolaAtivo : styles.pontoBolaInativo
+            ]} />
+          
+            <View style={[
+              styles.pontoBola, 
+              paginaAtual === 1 ? styles.pontoBolaAtivo : styles.pontoBolaInativo
+            ]} />
+
+         </View>
       </View>
+      <ActionFooter/>
     </SafeAreaView>
     );
   }
@@ -161,8 +168,6 @@ const styles = StyleSheet.create({
   },
   paginaCarrossel: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 10,
   },
   contentorPontosPagina: {
     flexDirection: 'row',
@@ -170,7 +175,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,                    
     paddingVertical: 10,      
-    backgroundColor: '#000000',
   },
   pontoBola: {
     width: 8,

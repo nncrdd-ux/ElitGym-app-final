@@ -5,10 +5,14 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import Header from '../../Components/Header/Header'; 
 import AppButton from '../../Components/AppCardButton/appButton';
+import { getTheme, fontSize } from '../../theme/theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import ActionFooter from '../../Components/Footer/ActionFooter';
 type RouteProps = RouteProp<RootStackParamList, 'DetalheExercicio'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheExercicio'>;
 
-export default function DetalheExercicio({ rotinas, setRotinas }: any) {
+export default function DetalheExercicio({ rotinas, setRotinas, darkmode }: any) {
+  const theme = getTheme(darkmode);
   const route = useRoute<RouteProps>();
   const navigation = useNavigation<NavigationProp>();
   const { exercicio } = route.params;
@@ -18,63 +22,52 @@ export default function DetalheExercicio({ rotinas, setRotinas }: any) {
   };
 
   return (
-    <View style={styles.mainContainer}>
+    <SafeAreaView style={theme.globalStyles.mainContainer}>
       <Header subtitulo="Execução" />
 
-      <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()} activeOpacity={0.7}>
-        <Text style={styles.textoVoltar}>⬅️ Voltar atrás</Text>
-      </TouchableOpacity>
-
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {/* GIF / Imagem em ponto grande para foco total */}
         <Image source={{ uri: exercicio.imagemUrl }} style={styles.imagemGrande} />
 
         <View style={styles.detalhesBox}>
-          <Text style={styles.titulo}>{exercicio.titulo}</Text>
+          <Text style={[styles.titulo, { color: theme.colors.text }]}>{exercicio.titulo}</Text>
           
           <View style={styles.linhaInfo}>
             <Text style={styles.label}>💪 Músculo Principal:</Text>
-            <Text style={styles.valor}>{exercicio.musculoprincipal.toUpperCase()}</Text>
+            <Text style={[styles.valor, {color: theme.colors.text }]}>{exercicio.musculoprincipal.toUpperCase()}</Text>
           </View>
           
           <View style={styles.linhaInfo}>
             <Text style={styles.label}>⚙️ Equipamento:</Text>
-            <Text style={styles.valor}>{exercicio.equipamento.toUpperCase()}</Text>
+            <Text style={[styles.valor, {color: theme.colors.text }]}>{exercicio.equipamento.toUpperCase()}</Text>
           </View>
 
           <View style={styles.linhaInfo}>
             <Text style={styles.label}>📊 Séries Planeadas:</Text>
-            <Text style={styles.valorDestaque}>{exercicio.series}</Text>
+            <Text style={[styles.valorDestaque, {color: theme.colors.primary}]}>{exercicio.series}</Text>
           </View>
 
           <Text style={styles.labelExecucao}>Instruções de Execução:</Text>
-          <Text style={styles.textoExecucao}>{exercicio.execucao}</Text>
+          <Text style={[styles.textoExecucao, { color: theme.colors.text }]}>{exercicio.execucao}</Text>
         </View>
-
-        <View style={styles.botaoContainer}>
-          <AppButton 
-            title="➕ Adicionar ao Meu Plano" 
-            onPress={adicionarAoPlano} 
-          />
-        </View>
+ 
       </ScrollView>
-    </View>
+      <ActionFooter/>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  mainContainer: { flex: 1, backgroundColor: '#000000' },
   botaoVoltar: { alignSelf: 'flex-start', marginLeft: 20, marginTop: 10, marginBottom: 10, paddingVertical: 6, paddingHorizontal: 12, backgroundColor: '#1c1c1e', borderRadius: 8 },
   textoVoltar: { color: '#ffffff', fontSize: 14, fontWeight: '600' },
   scrollContainer: { paddingBottom: 40 },
-  imagemGrande: { width: '100%', height: 240, resizeMode: 'contain', backgroundColor: '#1c1c1e' },
+  imagemGrande: { width: '100%', height: 240, resizeMode: 'contain'},
   detalhesBox: { padding: 20 },
-  titulo: { color: '#ffffff', fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
+  titulo: { fontSize: fontSize.large, fontWeight: 'bold', marginBottom: 20 },
   linhaInfo: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12, borderBottomWidth: 1, borderBottomColor: '#1c1c1e', paddingBottom: 8 },
-  label: { color: '#aaaaaa', fontSize: 15 },
-  valor: { color: '#ffffff', fontSize: 15, fontWeight: '500' },
-  valorDestaque: { color: '#45c7cc', fontSize: 16, fontWeight: 'bold' },
-  labelExecucao: { color: '#aaaaaa', fontSize: 15, marginTop: 15, marginBottom: 8 },
-  textoExecucao: { color: '#dddddd', fontSize: 15, lineHeight: 22, fontStyle: 'italic' },
+  label: { color: '#aaaaaa', fontSize: fontSize.medium },
+  valor: { fontSize: fontSize.medium, fontWeight: '500' },
+  valorDestaque: { fontSize: fontSize.medium, fontWeight: 'bold' },
+  labelExecucao: { color: '#aaaaaa', fontSize: fontSize.medium, marginTop: 15, marginBottom: 8 },
+  textoExecucao: { fontSize: fontSize.small, lineHeight: 22, fontStyle: 'italic' },
   botaoContainer: { marginTop: 10, width: '100%' }
 });

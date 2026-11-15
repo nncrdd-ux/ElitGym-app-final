@@ -4,9 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../../Components/Header/Header';
 import { Trash2, ArrowLeft, Plus, ChevronLeft } from 'react-native-feather';
+import { getTheme } from '../../theme/theme';
+import ActionFooter from '../../Components/Footer/ActionFooter';
 
-export default function HidratacaoScreen() {
-  const navigation = useNavigation();
+export default function HidratacaoScreen({darkmode, navigation}: any) {
+  const theme = getTheme(darkmode);
   
   const [aguaConsumida, setAguaConsumida] = useState<number>(0);
   const [valorCustomizado, setValorCustomizado] = useState<string>(''); // Estado para o TextInput
@@ -31,7 +33,7 @@ export default function HidratacaoScreen() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.mainContainer}>
+      <SafeAreaView style={theme.globalStyles.mainContainer}>
         <Header subtitulo="Controlo de Hidratação" />
         <View style={styles.contentorCentral}>
           
@@ -39,7 +41,7 @@ export default function HidratacaoScreen() {
           <View style={styles.contentorMestreBoneco}>
             <Image 
               source={require("../../../assets/corpo_hidratation.png")} 
-              style={[styles.bonecoBase, { tintColor: '#ffff' }]} 
+              style={[styles.bonecoBase]} 
               resizeMode="contain"
             />
             <View style={[styles.contentorAguaSubtil, { height: `${percentagem}%` }]}>
@@ -52,8 +54,8 @@ export default function HidratacaoScreen() {
             
           </View>
           <View style={styles.blocoTextoFlutuante}>
-              <Text style={styles.textoLitros}>{(aguaConsumida / 1000).toFixed(2)} L</Text>
-              <Text style={styles.textoPercentagem}>{percentagem.toFixed(0)}%</Text>
+              <Text style={[styles.textoLitros , {color: theme.colors.text }]}>{(aguaConsumida / 1000).toFixed(2)} L</Text>
+              <Text style={[styles.textoPercentagem, {color: theme.colors.primary }]}>{percentagem.toFixed(0)}%</Text>
             </View>
 
           {/* ================= ZONA DE ENTRADA DE DADOS ================= */}
@@ -87,29 +89,24 @@ export default function HidratacaoScreen() {
               </TouchableOpacity>
             </View>
 
-            {/* 3. BOTÃO REINICIAR */}
-            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingVertical: 10, position: 'relative' }}>
-        <ChevronLeft
-          style={{ position: 'absolute', left: 15, zIndex: 10}}
-          color="#fcf9f9"
-          size={30}
-          onPress={() => navigation.goBack()}
-          />
-            <TouchableOpacity style={styles.botaoReiniciar} onPress={() => setAguaConsumida(0)} activeOpacity={0.7}>
-              <Trash2 color="#ff4d4d" strokeWidth={2} width={16} height={16} />
-              <Text style={styles.textoReiniciar}>Reiniciar Hidratação</Text>
-            </TouchableOpacity>
-        </View>
           </View>
 
         </View>
+         <ActionFooter 
+                  actionColor="#ff4d4d"
+                  actionText='Reiniciar Hidratação'
+                  Icon={Trash2}
+                  onActionPress={() => {
+                    setAguaConsumida(0)
+                
+            }}
+            />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-  mainContainer: { flex: 1, backgroundColor: '#000000' },
   botaoVoltar: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -128,25 +125,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 30,
-    paddingTop: 10,
+    paddingTop: 25,
     paddingBottom: 25,
   },
   
   // GEOMETRIA RESPONSIVA DO BONECO
   contentorMestreBoneco: {
-    height: '42%',
-    aspectRatio: 2 / 3.5,
+    height: '60%',
+    aspectRatio: 2 / 3.6,
     position: 'relative',
     justifyContent: 'center',
     alignSelf: 'center',
-    flex: 1,
   },
-  bonecoBase: { width: '100%', height: '100%', opacity: 0.15 },
+  bonecoBase: { width: '100%', height: '100%', opacity: 0.70 },
   contentorAguaSubtil: { position: 'absolute', bottom: 0, left: 0, width: '100%', overflow: 'hidden' },
-  bonecoAzulPreenchido: { width: '100%', height: undefined, aspectRatio: 2 / 3.5, position: 'absolute', bottom: 0 },
+  bonecoAzulPreenchido: { width: '100%', height: undefined, aspectRatio: 2 / 3.6, position: 'absolute', bottom: 0 },
   blocoTextoFlutuante: { position: 'relative', width: '100%', justifyContent: 'center', alignItems: 'center', zIndex: 10 },
-  textoLitros: { color: '#ffffff', fontSize: 32, fontWeight: 'bold' },
-  textoPercentagem: { color: '#45c7cc', fontSize: 16, fontWeight: 'bold', marginTop: 4 },
+  textoLitros: { fontSize: 32, fontWeight: 'bold' },
+  textoPercentagem: { fontSize: 16, fontWeight: 'bold', marginTop: 4 },
   
   // BLOCO DE CONTROLO INFERIOR
   blocoControlo: { width: '100%', gap: 16 },

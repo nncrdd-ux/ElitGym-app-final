@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
   textContainer: {
     justifyContent: 'center',
     backgroundColor: 'transparent',
+    padding: 10
   },
   cardTitle: {
     color: '#ffffff',

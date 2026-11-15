@@ -7,11 +7,16 @@ import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
 import AppButton from '../../Components/AppCardButton/appButton';
 import { validar, Erros } from './Erros';
+import { getTheme } from '../../theme/theme';
+import ActionFooter from '../../Components/Footer/ActionFooter';
+import { Save } from 'react-native-feather';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type NavigationProps = NativeStackScreenProps<RootStackParamList, "ProfileScreen">;
 type esconderpassword = 'bolean';
 
-export default function ProfileScreen() {
+export default function ProfileScreen({darkmode }: any) {
+  const theme = getTheme(darkmode);
   const [nome, setNome] = useState('');
   const [birthday, setBirthday] = useState('');
   const [email, setEmail] = useState('');
@@ -30,48 +35,48 @@ export default function ProfileScreen() {
   };
 
   return (
-    <KeyboardAvoidingView
-    style={{ flex: 1, backgroundColor: '#000000' }}
-    >
+    <SafeAreaView style={theme.globalStyles.mainContainer}>
       <Header subtitulo="Criar Perfil de Elite" />
-      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+      <KeyboardAvoidingView
+        style={{ flex: 1, width: '100%' }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
         
-        <Text style={styles.label}>O teu Nome:</Text>
-        <TextInput 
+         <Text style={styles.label}>O teu Nome:</Text>
+         <TextInput 
           style={[styles.input, erros.nome ? styles.inputErro : null]}
           placeholder="Nome"
           placeholderTextColor="#555555"
           value={nome}
           onChangeText={setNome}
-        />
-        {erros.nome ? <Text style={styles.textoErro}>{erros.nome}</Text> : null}
+          />
+          {erros.nome ? <Text style={styles.textoErro}>{erros.nome}</Text> : null}
   
-        <Text style={styles.label}>Data de nascimento:</Text>
-        <TextInput 
-          style={[styles.input, erros.birthday ? styles.inputErro : null]}
-          placeholder="dd/mm/aaaa"
-          placeholderTextColor="#555555"
-          value={birthday}
-          onChangeText={setBirthday}
-        />
-        {erros.birthday ? <Text style={styles.textoErro}>{erros.birthday}</Text> : null}
-  
-        {/* INPUT: EMAIL */}
-        <Text style={styles.label}>E-mail:</Text>
-        <TextInput 
-          style={[styles.input, erros.email ? styles.inputErro : null]}
-          placeholder="email"
-          placeholderTextColor="#555555"
-          keyboardType="email-address" // Corrigido para "address" com 2 d's
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-        />
-        {erros.email ? <Text style={styles.textoErro}>{erros.email}</Text> : null}
-  
-        {/* INPUT: PASSWORD */}
-        <Text style={styles.label}>Password:</Text>
-        <View style={{
+          <Text style={styles.label}>Data de nascimento:</Text>
+          <TextInput 
+            style={[styles.input, erros.birthday ? styles.inputErro : null]}
+            placeholder="dd/mm/aaaa"
+            placeholderTextColor="#555555"
+            value={birthday}
+            onChangeText={setBirthday}
+          />
+          {erros.birthday ? <Text style={styles.textoErro}>{erros.birthday}</Text> : null}
+
+          <Text style={styles.label}>E-mail:</Text>
+          <TextInput 
+           style={[styles.input, erros.email ? styles.inputErro : null]}
+            placeholder="email"
+            placeholderTextColor="#555555"
+            keyboardType="email-address" // Corrigido para "address" com 2 d's
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+          />
+          {erros.email ? <Text style={styles.textoErro}>{erros.email}</Text> : null}
+
+          <Text style={styles.label}>Password:</Text>
+          <View style={{
               flexDirection: 'row',
               alignItems: 'center',
               backgroundColor: '#1c1c1e',
@@ -80,9 +85,9 @@ export default function ProfileScreen() {
               borderColor: erros.password ? '#ff4d4d' : '#2c2c2e',
               paddingRight: 14,
               marginBottom: 12,
-          }}>
+            }}>
           
-            <TextInput 
+              <TextInput 
                 style={{
                 flex: 1,
                 color: '#ffffff',
@@ -94,48 +99,48 @@ export default function ProfileScreen() {
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={esconderpassword === 'true'}
-            />
-            <TouchableOpacity 
+              />
+              <TouchableOpacity 
                 activeOpacity={0.7} 
                 onPress={() => setEsconderpassword(prev => prev === 'true' ? 'false' : 'true')}
-            >
-            <Image
-              source={
-                esconderpassword === 'true'
-                ? require("../../../assets/esconder_password.png")
-                : require("../../../assets/ver_password.png")
-                }
-              style={{ width: 40, height: 40, tintColor: esconderpassword === 'true' ? '#555555' : '#45c7cc' }} // Muda de cor ao clicar!
-            />
-            </TouchableOpacity>
-        </View>
-        {erros.password ? <Text style={styles.textoErro}>{erros.password}</Text> : null}
+              >
+              <Image
+                source={
+                  esconderpassword === 'true'
+                  ? require("../../../assets/esconder_password.png")
+                  : require("../../../assets/ver_password.png")
+                  }
+                style={{ width: 40, height: 40, tintColor: esconderpassword === 'true' ? '#555555' : '#45c7cc' }} // Muda de cor ao clicar!
+              />
+              </TouchableOpacity>
+          </View>
+          {erros.password ? <Text style={styles.textoErro}>{erros.password}</Text> : null}
 
-        <Text style={styles.label}>Confirma a Password:</Text>
-        <View style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              backgroundColor: '#1c1c1e',
-              borderRadius: 12,
-              borderWidth: 1,
-              borderColor: erros.password ? '#ff4d4d' : '#2c2c2e',
-              paddingRight: 14,
-              marginBottom: 12,
-          }}>  
-          <TextInput 
-          style={{
+          <Text style={styles.label}>Confirma a Password:</Text>
+          <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: '#1c1c1e',
+                borderRadius: 12,
+                borderWidth: 1,
+                borderColor: erros.password ? '#ff4d4d' : '#2c2c2e',
+                paddingRight: 14,
+                marginBottom: 12,
+            }}>  
+            <TextInput 
+            style={{
                 flex: 1,
                 color: '#ffffff',
                 padding: 14,
                 fontSize: 16,
                 }}
-          placeholder="Minimo de 8 caracteres"
-          placeholderTextColor="#555555"
-          value={passwordconfirm}
-          onChangeText={setPasswordconfirm}
-          secureTextEntry={esconderpassword === 'true'}
-        />
-        <TouchableOpacity 
+            placeholder="Minimo de 8 caracteres"
+            placeholderTextColor="#555555"
+            value={passwordconfirm}
+            onChangeText={setPasswordconfirm}
+            secureTextEntry={esconderpassword === 'true'}
+          />
+          <TouchableOpacity 
                 activeOpacity={0.7} 
                 onPress={() => setEsconderpassword(prev => prev === 'true' ? 'false' : 'true')} // Alterna entre true e false!
             >
@@ -150,16 +155,21 @@ export default function ProfileScreen() {
         </TouchableOpacity>
         </View>
         {erros.passwordconfirm ? <Text style={styles.textoErro}>{erros.passwordconfirm}</Text> : null}
-        
-        <AppButton title="💾 Gravar Dados" onPress={salvarPerfil} />
       </ScrollView>
-      <Footer/>
-  </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+       <ActionFooter 
+                actionColor="#45c7cc"
+                actionText='Gravar dados'
+                Icon={Save}
+                onActionPress={salvarPerfil}
+          />
+          </SafeAreaView>
+
   );
 }
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: '#000000', padding: 24, paddingTop: 10, paddingBottom: 30 },
+  container: { padding: 24, paddingTop: 10, paddingBottom: 30 },
   label: { color: '#aaaaaa', fontSize: 14, marginBottom: 8, marginTop: 4 },
   input: { backgroundColor: '#1c1c1e', color: '#ffffff', padding: 14, borderRadius: 12, marginBottom: 12, fontSize: 16, borderWidth: 1, borderColor: '#2c2c2e' },
   inputErro: { borderColor: '#ff4d4d' },

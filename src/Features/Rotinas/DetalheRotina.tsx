@@ -9,11 +9,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeft, Edit } from 'react-native-feather';
 import { SquaresPlusIcon } from 'react-native-heroicons/outline';
 import ActionFooter from '../../Components/Footer/ActionFooter';
+import { getTheme } from '../../theme/theme';
 
 type RouteProps = RouteProp<RootStackParamList, 'DetalheRotina'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRotina'>;
 
- export default function DetalheRotina({ rotinas, setRotinas }: any) {
+ export default function DetalheRotina({ rotinas, setRotinas, darkmode }: any) {
+  const theme = getTheme(darkmode);
   const route = useRoute<RouteProps>();
   const navigation = useNavigation<any>();
   const rotinaInicial = route.params?.rotina;
