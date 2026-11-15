@@ -3,20 +3,22 @@ import { View, Text, Switch, StyleSheet } from 'react-native';
 import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
 import { getTheme } from '../../theme/theme';
+import ActionFooter from '../../Components/Footer/ActionFooter';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function SettingsScreen({ darkmode, setDarkmode }: any) {
   
   const theme = getTheme(darkmode);
 
   const styles = StyleSheet.create({
-    blocoConfig: { padding: 24, marginTop: 10, backgroundColor: theme.colors.background },
+    blocoConfig: { flex:1, padding: 24, marginTop: 10, backgroundColor: theme.colors.background },
     tituloSeccao: { fontSize: theme.fontSize.small, color: darkmode ? '#45c7cc' : '#666666', fontWeight: '600', marginBottom: 10, textTransform: 'uppercase' },
     linhaConfig: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16, borderRadius: 12, backgroundColor: darkmode ? '#1c1c1e' : '#f4f4f4', borderWidth: 1, borderColor: darkmode ? '#2c2c2e' : '#e5e5ea' },
     textoConfig: { fontSize: theme.fontSize.medium, color: darkmode ? '#ffffff' : '#1c1c1e', fontWeight: '500' },
   });
 
   return (
-    <View style={theme.globalStyles.mainContainer}>
+    <SafeAreaView style={theme.globalStyles.mainContainer}>
       <Header subtitulo="Definições da App" />
 
       <View style={styles.blocoConfig}>
@@ -34,7 +36,7 @@ export default function SettingsScreen({ darkmode, setDarkmode }: any) {
         </View>
       </View>
 
-      <Footer />
-    </View>
+      <ActionFooter/>
+    </SafeAreaView>
   );
 }

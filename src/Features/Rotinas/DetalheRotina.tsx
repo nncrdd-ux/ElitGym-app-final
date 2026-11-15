@@ -6,10 +6,12 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import { listaExerciciosGeral } from '../Exercicios/Exercicios'; 
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChevronLeft, Edit } from 'react-native-feather';
+import {  RefreshCw, X , Edit } from 'react-native-feather';
 import { SquaresPlusIcon } from 'react-native-heroicons/outline';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 import { getTheme } from '../../theme/theme';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Accordion from '../../Components/Accordin/Accordion';
 
 type RouteProps = RouteProp<RootStackParamList, 'DetalheRotina'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRotina'>;
@@ -32,8 +34,50 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRoti
 
   setModalEditarVisivel(false);
 };
+const renderBotaoEscondidoDireita = (progress: any, dragX: any, exercicio: any) => {
+  return (
+    <View style={styles.blocoBotoesSwipeHorizontal}>
+      {/* Botão Substituir (Abre logo os exercícios do mesmo grupo muscular) */}
+      <TouchableOpacity
+        style={styles.containerSwipe}
+        activeOpacity={0.8}
+        onPress={() => {
+          navigation.navigate('ExerciciosList', {
+            musculoSelecionado: exercicio.musculoprincipal,
+            rotinaParaEditarId: rotina?.id,
+            exercicioASubstituirId: exercicio.id,
+          });
+        }}
+      >
+        <View>
+          <RefreshCw color="#45c7cc" strokeWidth={2.5} width={22} height={22} />
+        </View>
+      </TouchableOpacity>
+
+      {/* Botão Remover (Retira o exercício desta rotina) */}
+      <TouchableOpacity
+        style={styles.containerSwipe}
+        activeOpacity={0.8}
+        onPress={() => {
+          setRotinas((prev: any[]) =>
+            prev.map((r) =>
+              r.id === rotina?.id
+                ? { ...r, exercicios: (r.exercicios || []).filter((id: string) => id !== exercicio.id) }
+                : r
+            )
+          );
+        }}
+      >
+        <View>
+          <X color="#ff4d4d" strokeWidth={2.5} width={22} height={22} />
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
   return (
+    <GestureHandlerRootView style={{ flex: 1, width: '100%' }}>
     <SafeAreaView style={styles.mainContainer}>
             <Header subtitulo={rotina?.titulo} />
             <Edit style={{ position: 'absolute', top: 60, right: 20 }} 
@@ -50,23 +94,40 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRoti
                 keyExtractor={(id) => 'detalhe-exe-' + id}
                 contentContainerStyle={{ paddingBottom: 30 }}
                 renderItem={({ item }) => {
-                    const exercicio = listaExerciciosGeral.find((exe) => exe.id === item);
-                    if (!exercicio) return null;
-                    return (
-                        <View style={styles.cardExercicioHorizontal}>
-                            <Image 
-                            source={{ uri: exercicio.imagemUrl }} 
-                            style={{ width: 60, height: 60, borderRadius: 8, marginRight: 12 }}
-                            resizeMode="cover"
-                             />
-                             <View style={{ flex: 1, marginLeft: 8 }}>
-                            <Text style={{ color: '#ffffff', fontSize: 16, fontWeight: 'bold' }}>{exercicio.titulo}</Text>
-                            <Text style={{ color: '#45c7cc', fontSize: 13, marginTop: 4 }}>Séries: {exercicio.series}</Text>
-                            <Text style={{ color: '#45c7cc', fontSize: 13, marginTop: 4 }}>Equipamento: {exercicio.equipamento}</Text>
-                        </View>
-                        </View>
-                    );
-                }}
+          const exercicio = listaExerciciosGeral.find((exe) => exe.id === item);
+          if (!exercicio) return null;
+
+          const listaSeries = Array.isArray(exercicio.series)
+            ? exercicio.series
+            : [exercicio.series];
+
+          return (
+            <View style={styles.contentorCardExercicio}>
+              <Image
+                source={{ uri: exercicio.imagemUrl }}
+                style={styles.fotoExercicio}
+                resizeMode="cover"
+              />
+
+              <View style={{ flex: 1 }}>
+                <Accordion
+                  titulo={exercicio.titulo}
+                  subtitulo={`Equipamento: ${exercicio.equipamento.toUpperCase()}`}
+                  renderRightActions={(progress, dragX) =>
+                    renderBotaoEscondidoDireita(progress, dragX, exercicio)
+                  }
+                >
+                  {listaSeries.map((serieTexto: string, index: number) => (
+                    <View key={'serie-' + index} style={styles.linhaSerieInterna}>
+                      <Text style={styles.numeroSerie}>Série {index + 1}:</Text>
+                      <Text style={styles.valorSerie}>{serieTexto}</Text>
+                    </View>
+                  ))}
+                </Accordion>
+              </View>
+            </View>
+          );
+        }}
             />
             <TouchableOpacity style={{
                 alignSelf: 'flex-end',
@@ -133,6 +194,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRoti
         </View>
       </Modal>
     </SafeAreaView>
+    </GestureHandlerRootView>
   )
 }
 const styles = StyleSheet.create({
@@ -203,4 +265,43 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontWeight: 'bold',
   },
+   containerSwipe: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 80,
+    height: '100%',
+  },
+    blocoBotoesSwipeHorizontal: {
+    flexDirection: 'row',
+    width: 160,
+    height: '100%',
+  },
+  contentorCardExercicio: {
+  flexDirection: 'row',
+  alignItems: 'flex-start',
+  marginBottom: 14,
+  gap: 10,
+},
+fotoExercicio: {
+  width: 55,
+  height: 55,
+  borderRadius: 10,
+  marginTop: 2,
+},
+linhaSerieInterna: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  paddingVertical: 6,
+  borderBottomWidth: 1,
+  borderBottomColor: '#1c1c1e',
+},
+numeroSerie: {
+  color: '#45c7cc',
+  fontSize: 13,
+  fontWeight: 'bold',
+},
+valorSerie: {
+  color: '#ffffff',
+  fontSize: 13,
+},
 });

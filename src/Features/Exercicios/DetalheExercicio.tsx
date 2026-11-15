@@ -43,7 +43,7 @@ export default function DetalheExercicio({ rotinas, setRotinas, darkmode }: any)
 
           <View style={styles.linhaInfo}>
             <Text style={styles.label}>📊 Séries Planeadas:</Text>
-            <Text style={[styles.valorDestaque, {color: theme.colors.primary}]}>{exercicio.series}</Text>
+            <Text style={[styles.valorDestaque, { color: theme.colors.primary }]}>{exercicio.series.length} séries</Text>
           </View>
 
           <Text style={styles.labelExecucao}>Instruções de Execução:</Text>

@@ -112,7 +112,7 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation, dar
                             <View style={styles.dadosExercicio}>
                               <Text style={styles.nomeExercicio}>{exercicioCompleto.titulo}</Text>
                               <Text style={styles.seriesExercicio}>
-                                Séries: {exercicioCompleto.series}  •  Equipamento: {exercicioCompleto.equipamento.toUpperCase()}
+                                Séries: {exercicioCompleto.series.length}  •  Equipamento: {exercicioCompleto.equipamento.toUpperCase()}
                               </Text>
                             </View>
                           </View>

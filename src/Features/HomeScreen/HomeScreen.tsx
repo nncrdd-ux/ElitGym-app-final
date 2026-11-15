@@ -47,7 +47,7 @@ const HomeScreen = ({ navigation, darkmode }: any) => {
     </View>
       <View style={styles.boasVindasContainer}>
         <Text style={{fontSize: fontSize.large, color: theme.colors.text }}>
-          Olá, <Text style={styles.textoNome}>{nome}</Text>!
+          Olá, <Text style={{fontWeight: 'bold',color: theme.colors.primary,}}>{nome}</Text>!
         </Text>
       </View>
         <View style={styles.containerCarrossel}>
@@ -64,13 +64,13 @@ const HomeScreen = ({ navigation, darkmode }: any) => {
                   }
                 }}           
           >
-            <View style={styles.cardMotivacional}>
+            <View style={[styles.cardMotivacional, {backgroundColor: theme.colors.secondary}]}>
               <Text style={styles.textoCard}> "O único treino mau é aquele que não aconteceu." </Text>
             </View>
-            <View style={styles.cardMotivacional}>
+            <View style={[styles.cardMotivacional, {backgroundColor: theme.colors.secondary}]}>
               <Text style={styles.textoCard}> "Para o teu treino de Elite a Hidratação é essencial. Não te esqueças de beber água!!!" </Text>
             </View>
-            <View style={styles.cardMotivacional}>
+            <View style={[styles.cardMotivacional, {backgroundColor: theme.colors.secondary}]}>
               <Text style={styles.textoCard}> "Já treinaste hoje? Com o ElitGym podes construir o teu plano para teres um treino de Elite!!!" </Text>
             </View>
           </ScrollView>
@@ -97,21 +97,21 @@ const HomeScreen = ({ navigation, darkmode }: any) => {
         
         <AppCardButton
           title="Treinar / Exercícios"
-          subtitle="Explore a base de dados por músculo"
+          subtitle="Explora a base de dados por músculo ou por equipamento"
           imageSource={require('../../../assets/image_orgJ-N.png')} 
           onPress={() => navigation.navigate('MuscleSelectionScreen')}
         />
 
         <AppCardButton
           title="O Meu Plano"
-          subtitle="Visualize e gira a sua rotina semanal"
+          subtitle="Visualiza e gire a tua rotina semanal"
           imageSource={require('../../../assets/image_19ep_j.png')} 
           onPress={() => navigation.navigate('PlanoTreinoScreen')} 
         />
 
         <AppCardButton
           title="Hidratação"
-          subtitle="Controle o seu consumo diário de água"
+          subtitle="Controla o teu consumo diário de água"
           imageSource={require('../../../assets/card_agua.png')} 
           onPress={() => navigation.navigate('HidratationScreen')} 
         />
@@ -128,10 +128,6 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     paddingHorizontal: 20,
   },
-  textoNome: {
-    fontWeight: 'bold',
-    color: '#45c7cc',
-  },
   textoCard: {
     color: '#aaaaaa',
     fontSize: fontSize.small,
@@ -144,7 +140,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   cardMotivacional: {
-    backgroundColor: '#1c1c1e',
     width: 340,
     height: 75,
     alignItems: 'center',
