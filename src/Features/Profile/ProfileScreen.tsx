@@ -18,6 +18,7 @@ type esconderpassword = 'bolean';
 export default function ProfileScreen({darkmode }: any) {
   const theme = getTheme(darkmode);
   const [nome, setNome] = useState('');
+  const [sobrenome, setSobrenome] = useState('');
   const [birthday, setBirthday] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -43,15 +44,30 @@ export default function ProfileScreen({darkmode }: any) {
       >
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
         
-         <Text style={styles.label}>O teu Nome:</Text>
-         <TextInput 
-          style={[styles.input, erros.nome ? styles.inputErro : null]}
-          placeholder="Nome"
-          placeholderTextColor="#555555"
-          value={nome}
-          onChangeText={setNome}
-          />
-          {erros.nome ? <Text style={styles.textoErro}>{erros.nome}</Text> : null}
+         <View style={{ flexDirection:'row', gap: 12, width: '100%' }}>
+           <View style={{ flex: 1 }}>
+            <Text style={styles.label}>O teu Nome:</Text>
+            <TextInput 
+             style={[styles.input, erros.nome ? styles.inputErro : null]}
+             placeholder="Nome"
+             placeholderTextColor="#555555"
+             value={nome}
+             onChangeText={setNome}
+             />
+             {erros.nome ? <Text style={styles.textoErro}>{erros.nome}</Text> : null}
+            </View>
+            <View style={{ flex: 1 }}> 
+             <Text style={styles.label}>Sobrenome:</Text>
+             <TextInput 
+              style={[styles.input, erros.sobrenome ? styles.inputErro : null]}
+              placeholder="Sobrenome"
+              placeholderTextColor="#555555"
+              value={sobrenome}
+              onChangeText={setSobrenome}
+              />
+            {erros.nome ? <Text style={styles.textoErro}>{erros.nome}</Text> : null}
+            </View> 
+          </View>
   
           <Text style={styles.label}>Data de nascimento:</Text>
           <TextInput 
