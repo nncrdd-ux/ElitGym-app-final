@@ -20,7 +20,8 @@ export default function ProfileScreen({darkmode }: any) {
   const theme = getTheme(darkmode);
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
-  const [birthday, setBirthday] = useState(new Date(2000, 0, 1));
+  const [dataNascimento, setDataNascimento] = useState(new Date(2000, 0, 1));
+  const [birthday, setBirthday] = useState('');
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,7 +43,7 @@ export default function ProfileScreen({darkmode }: any) {
 };
 
   const salvarPerfil = () => {
-    const e = validar(nome, email, birthday, password, passwordconfirm);
+    const e = validar(nome, sobrenome, email, birthday, password, passwordconfirm);
     setErros(e);
 
     if (Object.keys(e).length === 0) {
@@ -80,7 +81,7 @@ export default function ProfileScreen({darkmode }: any) {
               value={sobrenome}
               onChangeText={setSobrenome}
               />
-            {erros.nome ? <Text style={styles.textoErro}>{erros.nome}</Text> : null}
+            {erros.sobrenome ? <Text style={styles.textoErro}>{erros.sobrenome}</Text> : null}
             </View> 
           </View>
   
