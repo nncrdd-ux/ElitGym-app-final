@@ -23,6 +23,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
   const [rotinas, setRotinas] = useState(listaRotinasGeral);
   const [darkmode, setDarkmode] = useState(true);
+  const [historicoTreinos, setHistoricoTreinos] = useState<any[]>([]);
   
   return (
     <View style={styles.container}>
@@ -138,6 +139,7 @@ export default function App() {
                 {...props} 
                 rotinas={rotinas} 
                 setRotinas={setRotinas}
+                setHistoricoTreinos={setHistoricoTreinos}
                 darkmode={darkmode} 
               />
           )}
@@ -150,6 +152,7 @@ export default function App() {
                 {...props} 
                 rotinas={rotinas}
                 setRotinas={setRotinas}
+                historicoTreinos={historicoTreinos}
                 darkmode={darkmode} 
               />
         )}
