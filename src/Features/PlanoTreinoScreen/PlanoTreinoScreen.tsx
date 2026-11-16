@@ -25,8 +25,8 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation, dar
     const theme = getTheme(darkmode);
     const rotinasAtivas = rotinas ? rotinas.filter((r: RotinaProps) => r.selecionada) : [];
     const [subtituloDinamico, setSubtituloDinamico] = useState("O Teu Plano de Elite");
-    const renderBotaoEscondidoDireita = (progress: any, dragX: any, rotina: any) => {
-      useEffect(() => {
+    const [abaAtiva, setAbaAtiva] = useState<'plano' | 'historico'>('plano');
+     useEffect(() => {
     const quantidade = rotinasAtivas.length;
     
     if (quantidade === 0) {
@@ -37,66 +37,73 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation, dar
       setSubtituloDinamico(`Tens ${quantidade} treinos de Elite agendados`);
     }
   }, [rotinas]);
+    const totalTreinosConcluidos = historicoTreinos.length;
+    const totalSegundosAcumulados = historicoTreinos.reduce(
+    (acc: number, item: any) => acc + (item.duracaoSegundos || 0), 0 );
+    const minutosTotais = Math.floor(totalSegundosAcumulados / 60);
+   const renderBotaoEscondidoDireita = (progress: any, dragX: any, rotina: any) => (
+    <View style={styles.blocoBotoesSwipeHorizontal}>
+      <TouchableOpacity
+        style={styles.containerSwipe}
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate('DetalheRotina', { rotina: rotina })}
+      >
+        <Edit color="#45c7cc" strokeWidth={2.5} width={22} height={22} />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.containerSwipe}
+        activeOpacity={0.8}
+        onPress={() =>
+          setRotinas((prev: any) =>
+            prev.map((r: any) => (r.id === rotina.id ? { ...r, selecionada: false } : r))
+          )
+        }
+      >
+        <X color="#ff4d4d" strokeWidth={2.5} width={22} height={22} />
+      </TouchableOpacity>
+    </View>
+  );
     return (
-      <View style={styles.blocoBotoesSwipeHorizontal}>
-        
-        <TouchableOpacity 
-          style={styles.containerSwipe}
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate('DetalheRotina', { rotina: rotina });
-          }}
-        >
-          <View >
-            <Edit color="#45c7cc" strokeWidth={2.5} width={22} height={22} />
-          </View>
-        </TouchableOpacity>
+    <GestureHandlerRootView style={{ flex: 1, width: '100%' }}>
+      <SafeAreaView style={theme.globalStyles.mainContainer}>
+        <Header subtitulo={subtituloDinamico} darkmode={darkmode} />
 
-        <TouchableOpacity 
-          style={styles.containerSwipe}
-          activeOpacity={0.8}
-          onPress={() => {
-            setRotinas((prev: any) => 
-              prev.map((r: any) => r.id === rotina.id ? { ...r, selecionada: false } : r)
-            );
-          }}
-        >
-          <View>
-            <X color="#ff4d4d" strokeWidth={2.5} width={22} height={22} />
-          </View>
-        </TouchableOpacity>
+        {/* Barra de Abas: Plano Ativo vs Histórico */}
+        <View style={[styles.barraAbas, { borderBottomColor: theme.colors.border }]}>
+          <TouchableOpacity
+            style={[styles.abaItem, abaAtiva === 'plano' && styles.abaItemAtiva]}
+            onPress={() => setAbaAtiva('plano')}
+          >
+            <Text style={[styles.abaTexto, { color: abaAtiva === 'plano' ? '#45c7cc' : '#888888' }]}>
+              Plano Ativo
+            </Text>
+          </TouchableOpacity>
 
-      </View>
-    );
-  };
+          <TouchableOpacity
+            style={[styles.abaItem, abaAtiva === 'historico' && styles.abaItemAtiva]}
+            onPress={() => setAbaAtiva('historico')}
+          >
+            <Text style={[styles.abaTexto, { color: abaAtiva === 'historico' ? '#45c7cc' : '#888888' }]}>
+              Histórico ({totalTreinosConcluidos})
+            </Text>
+          </TouchableOpacity>
+        </View>
 
-
-   return (
-    <GestureHandlerRootView style={{ flex: 1, width: '100%'}}>
-    <SafeAreaView style={theme.globalStyles.mainContainer}>
-      <Header subtitulo={subtituloDinamico} />
-
-      <View style={{ 
-        flex: 1,
-        paddingHorizontal: 20,
-        paddingTop: 10,
-        marginTop: 25,
-        }}>
-
-        <FlatList
-          data={rotinasAtivas}
-          keyExtractor={(item) => 'plano-rotina-' + item.id}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 30 }}
-          renderItem={({ item: rotina }) => {
-            
-            return (
-                  <View style={styles.contentorCardPlano}>
-                    <Accordion
-                      titulo={`${rotina.titulo}`}
-                      subtitulo={`${rotina.exercicios ? rotina.exercicios.length : 0} exercícios`}
-                      renderRightActions={(progress, dragX) => renderBotaoEscondidoDireita(progress, dragX, rotina)}
-                    >
+        {abaAtiva === 'plano' ? (
+          <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 15 }}>
+            <FlatList
+              data={rotinasAtivas}
+              keyExtractor={(item) => 'plano-rotina-' + item.id}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ paddingBottom: 30 }}
+              renderItem={({ item: rotina }) => (
+                <View style={styles.contentorCardPlano}>
+                  <Accordion
+                    titulo={`${rotina.titulo}`}
+                    subtitulo={`${rotina.exercicios ? rotina.exercicios.length : 0} exercícios`}
+                    renderRightActions={(progress, dragX) => renderBotaoEscondidoDireita(progress, dragX, rotina)}
+                  >
                     {rotina.exercicios && rotina.exercicios.length > 0 ? (
                       rotina.exercicios.map((idExercicio: string) => {
                         const exercicioCompleto = listaExerciciosGeral.find((ex) => ex.id === idExercicio);
@@ -104,15 +111,15 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation, dar
 
                         return (
                           <View key={'plano-inner-exe-' + idExercicio} style={styles.cardExercicioInterno}>
-                            <Image 
-                              source={{ uri: exercicioCompleto.imagemUrl }} 
+                            <Image
+                              source={{ uri: exercicioCompleto.imagemUrl }}
                               style={styles.fotoExercicio}
                               resizeMode="cover"
                             />
                             <View style={styles.dadosExercicio}>
                               <Text style={styles.nomeExercicio}>{exercicioCompleto.titulo}</Text>
                               <Text style={styles.seriesExercicio}>
-                                Séries: {exercicioCompleto.series.length}  •  Equipamento: {exercicioCompleto.equipamento.toUpperCase()}
+                                Séries: {Array.isArray(exercicioCompleto.series) ? exercicioCompleto.series.length : exercicioCompleto.series} • Equipamento: {exercicioCompleto.equipamento.toUpperCase()}
                               </Text>
                             </View>
                           </View>
@@ -121,62 +128,185 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation, dar
                     ) : (
                       <Text style={styles.listaVaziaInterna}>Sem exercícios nesta rotina.</Text>
                     )}
-                    </Accordion>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => console.log("Iniciar treino: " + rotina.titulo)}
-              style={{justifyContent: 'flex-start', padding: 6, marginTop: 12 }}
-            >
-              <PlayCircle color="#45c7cc" width={22} height={22} />
-            </TouchableOpacity>
-                
+                  </Accordion>
+
+                  {/* Botão Play ligado ao DetalheRotina em Modo Execução */}
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => navigation.navigate('DetalheRotina', { rotina: rotina, emExecucao: true })}
+                    style={{ justifyContent: 'flex-start', padding: 6, marginTop: 12 }}
+                  >
+                    <PlayCircle color="#45c7cc" width={24} height={24} />
+                  </TouchableOpacity>
+                </View>
+              )}
+              ListEmptyComponent={
+                <Text style={styles.stylesListaVazia}>
+                  ⚠️ O teu plano de treino está vazio. Clica no botão abaixo para explorares o catálogo e ativares os teus treinos de Elite!
+                </Text>
+              }
+            />
+          </View>
+        ) : (
+          <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 15 }}>
+            <View style={[styles.cardResumoGeral, { backgroundColor: theme.colors.secondary, borderColor: theme.colors.border }]}>
+              <View style={{ alignItems: 'center', flex: 1 }}>
+                <Text style={styles.labelResumo}>TREINOS CONCLUÍDOS</Text>
+                <Text style={styles.valorResumoDestaque}>{totalTreinosConcluidos}</Text>
+              </View>
+              <View style={{ width: 1, backgroundColor: theme.colors.border }} />
+              <View style={{ alignItems: 'center', flex: 1 }}>
+                <Text style={styles.labelResumo}>DURAÇÃO TOTAL</Text>
+                <Text style={[styles.valorResumoNormal, { color: theme.colors.text }]}>{minutosTotais} min</Text>
+              </View>
             </View>
-            );
-          }}
-          ListEmptyComponent={
-            <Text style={styles.stylesListaVazia}>
-              ⚠️ O teu plano de treino está vazio. Clica no botão acima para explorares o catálogo e ativares os teus treinos de Elite!
-            </Text>
-          }
-        />
-      </View>
-      <ActionFooter 
+
+            <FlatList
+              data={historicoTreinos}
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={{ paddingBottom: 30 }}
+              ListEmptyComponent={
+                <Text style={styles.stylesListaVazia}>
+                  Ainda não concluíste nenhum treino. Carrega no Play de uma rotina para começar!
+                </Text>
+              }
+              renderItem={({ item }) => (
+                <View style={[styles.cardHistorico, { backgroundColor: theme.colors.secondary, borderColor: theme.colors.border }]}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <Text style={[styles.tituloHistorico, { color: theme.colors.text }]}>{item.titulo}</Text>
+                    <Text style={styles.duracaoHistorico}>{item.duracaoTexto}</Text>
+                  </View>
+                  <Text style={styles.detalheHistorico}>
+                    {item.exerciciosFeitos}/{item.totalExercicios} exercícios concluídos • {item.data}
+                  </Text>
+                </View>
+              )}
+            />
+          </View>
+        )}
+
+        <ActionFooter
           onActionPress={() => navigation.navigate('RotinasList')}
           Icon={PlusSquare}
           actionColor="#45c7cc"
-          actionText='Acrescentar Rotina(s)'
+          actionText="Acrescentar Rotina(s)"
         />
-    </SafeAreaView>
-   </GestureHandlerRootView> 
+      </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
-
-  botaoAcrescentar: {
-    flexDirection: 'row', backgroundColor: '#1c1c1e', borderWidth: 1, borderColor: '#45c7cc',
-    paddingVertical: 14, borderRadius: 12, alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 20, marginTop: 10,
+  barraAbas: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    marginTop: 10,
   },
-  textoBotaoAcrescentar: { color: '#45c7cc', fontSize: 15, fontWeight: 'bold' },
+  abaItem: {
+    flex: 1,
+    paddingVertical: 12,
+    alignItems: 'center',
+    borderBottomWidth: 2,
+    borderBottomColor: 'transparent',
+  },
+  abaItemAtiva: {
+    borderBottomColor: '#45c7cc',
+  },
+  abaTexto: {
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  cardResumoGeral: {
+    flexDirection: 'row',
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginBottom: 18,
+  },
+  labelResumo: {
+    color: '#888888',
+    fontSize: 11,
+    fontWeight: 'bold',
+  },
+  valorResumoDestaque: {
+    color: '#45c7cc',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginTop: 4,
+  },
+  valorResumoNormal: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginTop: 4,
+  },
+  cardHistorico: {
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginBottom: 12,
+  },
+  tituloHistorico: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  duracaoHistorico: {
+    color: '#45c7cc',
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  detalheHistorico: {
+    color: '#888888',
+    fontSize: 13,
+    marginTop: 6,
+  },
   contentorCardPlano: {
     borderRadius: 12,
     marginBottom: 14,
     overflow: 'hidden',
-    flexDirection : 'row',
-    justifyContent: 'space-between'
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  textoFixoAcao: { color: '#666666', fontSize: 11, fontWeight: '600', textTransform: 'uppercase' },
-  botaoRemover: { padding: 4 },
   cardExercicioInterno: {
-    flexDirection: 'row', alignItems: 'center',
-    padding: 10, borderRadius: 8, marginBottom: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 8,
   },
-  fotoExercicio: { width: 46, height: 46, borderRadius: 6, backgroundColor: '#212122' },
-  dadosExercicio: { flex: 1, marginLeft: 12 },
-  nomeExercicio: { color: '#ffffff', fontSize: 14, fontWeight: '600' },
-  seriesExercicio: { color: '#45c7cc', fontSize: 12, marginTop: 3 },
-  stylesListaVazia: { color: '#666666', textAlign: 'center', marginTop: 40, fontSize: 14, paddingHorizontal: 30, lineHeight: 22 },
-  listaVaziaInterna: { color: '#555555', fontSize: 12, fontStyle: 'italic', textAlign: 'center', paddingVertical: 4
+  fotoExercicio: {
+    width: 46,
+    height: 46,
+    borderRadius: 6,
+    backgroundColor: '#212122',
+  },
+  dadosExercicio: {
+    flex: 1,
+    marginLeft: 12,
+  },
+  nomeExercicio: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  seriesExercicio: {
+    color: '#45c7cc',
+    fontSize: 12,
+    marginTop: 3,
+  },
+  stylesListaVazia: {
+    color: '#666666',
+    textAlign: 'center',
+    marginTop: 40,
+    fontSize: 14,
+    paddingHorizontal: 30,
+    lineHeight: 22,
+  },
+  listaVaziaInterna: {
+    color: '#555555',
+    fontSize: 12,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    paddingVertical: 4,
   },
   containerSwipe: {
     justifyContent: 'center',
@@ -184,21 +314,9 @@ const styles = StyleSheet.create({
     width: 80,
     height: '100%',
   },
-    blocoBotoesSwipeHorizontal: {
+  blocoBotoesSwipeHorizontal: {
     flexDirection: 'row',
     width: 160,
     height: '100%',
-  },
-  linhaMestreCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#1c1c1e',
-    paddingRight: 14,
-  },
-  zonaBotaoPlayCard: {
-    paddingVertical: 14,
-    paddingHorizontal: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
