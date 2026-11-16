@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { ChevronDown, ChevronRight, ChevronUp } from 'react-native-feather';
-import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable'; // 🧠 VOLTAMOS AO REANIMATED OFICIAL!
+import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 
 type AccordionProps = {
   titulo: string;
   subtitulo?: string;
   children: React.ReactNode;
-  renderRightActions?: (progress: any, dragX: any) => React.ReactNode; // 🚀 Nova prop opcional para receber os botões!
+  renderRightActions?: (progress: any, dragX: any) => React.ReactNode;
 };
 
 export default function Accordion({ titulo, subtitulo, children, renderRightActions }: AccordionProps) {
