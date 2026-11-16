@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { ChevronDown, ChevronRight, ChevronUp } from 'react-native-feather';
+import { ChevronDown, ChevronRight } from 'react-native-feather';
 import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 
 type AccordionProps = {

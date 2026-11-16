@@ -1,4 +1,3 @@
-import React from 'react';
 import { TouchableOpacity, Text, Image, StyleSheet, View } from 'react-native';
 
 type AppCardButtonProps = {

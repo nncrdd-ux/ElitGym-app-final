@@ -1,8 +1,6 @@
-import React from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import ProfileScreen from '../../Features/Profile/ProfileScreen';
-import { Settings } from 'react-native-feather'; // Biblioteca 1 (Feather)
+import { Settings } from 'react-native-feather';
 import { UserCircleIcon, ArrowRightEndOnRectangleIcon } from 'react-native-heroicons/solid'; // Biblioteca 2 (Heroicons)
 
 export default function Footer() {

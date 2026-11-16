@@ -1,7 +1,5 @@
-import React from 'react';
 import { View, Text, Switch, StyleSheet } from 'react-native';
 import Header from '../../Components/Header/Header';
-import Footer from '../../Components/Footer/Footer';
 import { getTheme } from '../../theme/theme';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 import { SafeAreaView } from 'react-native-safe-area-context';

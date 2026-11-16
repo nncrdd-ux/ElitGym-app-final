@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, View, Text, Image, TextInput, Alert, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
-import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
-import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import Header from '../../Components/Header/Header';
-import Footer from '../../Components/Footer/Footer';
-import AppButton from '../../Components/AppCardButton/appButton';
 import { validar, Erros } from './Erros';
 import { getTheme } from '../../theme/theme';
 import ActionFooter from '../../Components/Footer/ActionFooter';

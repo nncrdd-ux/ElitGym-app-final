@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import {listaRotinasGeral, RotinaProps} from '../Rotinas/Rotinas';
+import { useEffect, useState } from 'react';
+import {RotinaProps} from '../Rotinas/Rotinas';
 import { RootStackParamList } from '../../Navigation/types';
-import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
-import { View, Text, Dimensions, TouchableOpacity, StyleSheet, Image, FlatList, Animated, } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { View, Text, Dimensions, TouchableOpacity, StyleSheet, Image, FlatList, } from 'react-native';
 import Header from '../../Components/Header/Header';
-import Footer from '../../Components/Footer/Footer';
-import AppCardButton from '../../Components/AppCardButton/AppCardButton';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import {listaExerciciosGeral} from '../Exercicios/Exercicios';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { ChevronLeft, Edit, PlayCircle, PlusSquare, X} from 'react-native-feather';
+import { Edit, PlayCircle, PlusSquare, X} from 'react-native-feather';
 import Accordion from '../../Components/Accordin/Accordion';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import Swipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 import { getTheme } from '../../theme/theme';
 

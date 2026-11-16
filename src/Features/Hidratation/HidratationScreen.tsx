@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
 import Header from '../../Components/Header/Header';
-import { Trash2, ArrowLeft, Plus, ChevronLeft } from 'react-native-feather';
+import { Trash2, Plus } from 'react-native-feather';
 import { getTheme } from '../../theme/theme';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 

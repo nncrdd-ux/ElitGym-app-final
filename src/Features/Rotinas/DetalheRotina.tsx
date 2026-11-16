@@ -1,5 +1,5 @@
 import { View, Text , StyleSheet, FlatList, Image, TouchableOpacity, Modal, TextInput } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../../Components/Header/Header'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';

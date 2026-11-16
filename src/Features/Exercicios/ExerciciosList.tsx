@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -7,7 +6,7 @@ import Header from '../../Components/Header/Header';
 import { listaExerciciosGeral, ExercicioProps } from './Exercicios';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChevronsLeft, ChevronsRight } from 'react-native-feather';
+import { ChevronsRight } from 'react-native-feather';
 import { getTheme } from '../../theme/theme';
 
 type RouteProps = RouteProp<RootStackParamList, 'ExerciciosList'>;

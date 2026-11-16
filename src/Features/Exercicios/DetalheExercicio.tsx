@@ -1,10 +1,8 @@
-import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import Header from '../../Components/Header/Header'; 
-import AppButton from '../../Components/AppCardButton/appButton';
 import { getTheme, fontSize } from '../../theme/theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ActionFooter from '../../Components/Footer/ActionFooter';

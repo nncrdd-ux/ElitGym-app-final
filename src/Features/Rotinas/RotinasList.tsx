@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-import { listaRotinasGeral, RotinaProps } from './Rotinas';
+import { useState } from 'react'
+import { RotinaProps } from './Rotinas';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../Navigation/types';
 import { Dimensions, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Header from '../../Components/Header/Header';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChevronLeft, Edit, Trash } from 'react-native-feather';
+import { Edit, Trash } from 'react-native-feather';
 import Checkbox from "expo-checkbox";
-import { SquaresPlusIcon } from 'react-native-heroicons/outline'; 
 import { getTheme } from '../../theme/theme';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 

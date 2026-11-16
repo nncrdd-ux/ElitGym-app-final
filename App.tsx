@@ -16,7 +16,6 @@ import {listaRotinasGeral} from './src/Features/Rotinas/Rotinas';
 import { useState } from 'react';
 import PlanoTreinoScreen from './src/Features/PlanoTreinoScreen/PlanoTreinoScreen';
 import HidratationScreen from './src/Features/Hidratation/HidratationScreen';
-import { colorsDark, colorsLight, fontSize } from './src/theme/theme';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

@@ -1,11 +1,9 @@
-import React from 'react';
 import Header from '../../Components/Header/Header';
-import Footer from '../../Components/Footer/Footer';
-import { useNavigation } from '@react-navigation/native'; // CORREÇÃO: Import do hook useNavigation
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { Bell, ChevronsRight, HelpCircle, Edit, Lock, LogOut } from 'react-native-feather'; 
+import { Bell, ChevronsRight, HelpCircle, Edit, Lock } from 'react-native-feather'; 
 import { ArrowRightStartOnRectangleIcon } from 'react-native-heroicons/outline'; 
 import ActionFooter from '../../Components/Footer/ActionFooter';
 import { SafeAreaView } from 'react-native-safe-area-context';

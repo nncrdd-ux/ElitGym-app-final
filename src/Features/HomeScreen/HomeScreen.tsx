@@ -1,8 +1,7 @@
 import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
-import Header from '../../Components/Header/Header';
 import AppCardButton from '../../Components/AppCardButton/AppCardButton';
 import Footer from '../../Components/Footer/Footer';
 import { nome } from '../Profile/Perfil';
