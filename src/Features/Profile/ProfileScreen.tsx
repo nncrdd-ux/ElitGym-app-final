@@ -11,6 +11,7 @@ import { getTheme } from '../../theme/theme';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 import { Save } from 'react-native-feather';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 type NavigationProps = NativeStackScreenProps<RootStackParamList, "ProfileScreen">;
 type esconderpassword = 'bolean';
@@ -19,12 +20,26 @@ export default function ProfileScreen({darkmode }: any) {
   const theme = getTheme(darkmode);
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const [birthday, setBirthday] = useState(new Date(2000, 0, 1));
+  const [mostrarCalendario, setMostrarCalendario] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordconfirm, setPasswordconfirm] = useState('');
   const [esconderpassword, setEsconderpassword] = useState('true')
   const [erros, setErros] = useState<Erros>({});
+  const aoMudarData = (event: any, dataSelecionada?: Date) => {
+  if (Platform.OS === 'android') {
+    setMostrarCalendario(false);
+  }
+
+  if (dataSelecionada) {
+    setDataNascimento(dataSelecionada);
+    const dia = dataSelecionada.getDate().toString().padStart(2, '0');
+    const mes = (dataSelecionada.getMonth() + 1).toString().padStart(2, '0');
+    const ano = dataSelecionada.getFullYear();
+    setBirthday(`${dia}/${mes}/${ano}`);
+  }
+};
 
   const salvarPerfil = () => {
     const e = validar(nome, email, birthday, password, passwordconfirm);
@@ -70,15 +85,26 @@ export default function ProfileScreen({darkmode }: any) {
           </View>
   
           <Text style={styles.label}>Data de nascimento:</Text>
-          <TextInput 
-            style={[styles.input, erros.birthday ? styles.inputErro : null]}
-            placeholder="dd/mm/aaaa"
-            placeholderTextColor="#555555"
-            value={birthday}
-            onChangeText={setBirthday}
-          />
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => setMostrarCalendario(true)}
+            style={[styles.input, erros.birthday ? styles.inputErro : null, { justifyContent: 'center' }]}
+          >
+            <Text style={{ color: birthday ? '#ffffff' : '#555555', fontSize: 16 }}>
+              {birthday || 'Selecionar data (dd/mm/aaaa)'}
+            </Text>
+          </TouchableOpacity>
           {erros.birthday ? <Text style={styles.textoErro}>{erros.birthday}</Text> : null}
-
+          
+          {mostrarCalendario && (
+        <DateTimePicker
+          value={birthday}
+          mode="date"
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+          maximumDate={new Date()} // Impede escolher datas no futuro
+          onChange={aoMudarData}
+          />
+      )}
           <Text style={styles.label}>E-mail:</Text>
           <TextInput 
            style={[styles.input, erros.email ? styles.inputErro : null]}
