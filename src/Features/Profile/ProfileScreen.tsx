@@ -99,10 +99,10 @@ export default function ProfileScreen({darkmode }: any) {
           
           {mostrarCalendario && (
         <DateTimePicker
-          value={birthday}
+          value={dataNascimento}
           mode="date"
           display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-          maximumDate={new Date()} // Impede escolher datas no futuro
+          maximumDate={new Date()}
           onChange={aoMudarData}
           />
       )}
