@@ -113,7 +113,9 @@ export default function App() {
             {(props) => (
               <Perfil
               {...props}
-              darkmode={darkmode}
+                rotinas={rotinas}
+                historicoTreinos={historicoTreinos}
+                darkmode={darkmode}
               />
             )}
             
