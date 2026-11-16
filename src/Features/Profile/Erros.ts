@@ -12,7 +12,7 @@ export function validar(nome: string, sobrenome: string, email: string, birthday
 
   if (nome.trim().length < 3) e.nome = 'O nome tem de ter pelo menos 3 letras.';
 
-  if (sobrenome.trim().length < 3) e.nome = 'O sobrenome tem de ter pelo menos 3 letras.';
+  if (sobrenome.trim().length < 2) e.sobrenome = 'O sobrenome tem de ter pelo menos 2 letras.';
   
   if (!email.includes('@') || !email.includes('.')) e.email = 'Escreve um email válido.';
   
