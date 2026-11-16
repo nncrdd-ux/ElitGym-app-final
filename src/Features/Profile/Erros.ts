@@ -1,15 +1,18 @@
 export type Erros = {
   nome?: string;
+  sobrenome?: string;
   email?: string;
   birthday?: string;
   password?: string;
   passwordconfirm?: string;
 };
 
-export function validar(nome: string, email: string, birthday: string, password: string, passwordconfirm: string): Erros {
+export function validar(nome: string, sobrenome: string, email: string, birthday: string, password: string, passwordconfirm: string): Erros {
   const e: Erros = {};
 
   if (nome.trim().length < 3) e.nome = 'O nome tem de ter pelo menos 3 letras.';
+
+  if (sobrenome.trim().length < 3) e.nome = 'O sobrenome tem de ter pelo menos 3 letras.';
   
   if (!email.includes('@') || !email.includes('.')) e.email = 'Escreve um email válido.';
   
