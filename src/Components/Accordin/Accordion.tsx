@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1c1c1e',
     borderRadius: 12,
     overflow: 'hidden',
-    width: '90%' 
+    width: '100%' 
   },
   header: {
     flexDirection: 'row',
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   headerAtivo: {
     backgroundColor: '#1f1f22',
   },
-  blocoTexto: { flexDirection: 'column' },
+  blocoTexto: { flexDirection: 'column', flex: 1, marginRight: 10 },
   titulo: { color: '#ffffff', fontSize: 15, fontWeight: 'bold' },
   subtitulo: { color: '#888888', fontSize: 12, marginTop: 3 },
   painelConteudo: {

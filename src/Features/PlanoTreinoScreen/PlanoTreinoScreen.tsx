@@ -21,7 +21,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'PlanoTreino
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation, darkmode }: any) {
+export default function PlanoTreinoScreen({ rotinas, setRotinas, historicoTreinos = [], navigation, darkmode }: any) {
     const theme = getTheme(darkmode);
     const rotinasAtivas = rotinas ? rotinas.filter((r: RotinaProps) => r.selecionada) : [];
     const [subtituloDinamico, setSubtituloDinamico] = useState("O Teu Plano de Elite");
@@ -67,9 +67,8 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation, dar
     return (
     <GestureHandlerRootView style={{ flex: 1, width: '100%' }}>
       <SafeAreaView style={theme.globalStyles.mainContainer}>
-        <Header subtitulo={subtituloDinamico} darkmode={darkmode} />
+        <Header subtitulo={subtituloDinamico}/>
 
-        {/* Barra de Abas: Plano Ativo vs Histórico */}
         <View style={[styles.barraAbas, { borderBottomColor: theme.colors.border }]}>
           <TouchableOpacity
             style={[styles.abaItem, abaAtiva === 'plano' && styles.abaItemAtiva]}
@@ -99,6 +98,7 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation, dar
               contentContainerStyle={{ paddingBottom: 30 }}
               renderItem={({ item: rotina }) => (
                 <View style={styles.contentorCardPlano}>
+                   <View style={{ flex: 1 }}>
                   <Accordion
                     titulo={`${rotina.titulo}`}
                     subtitulo={`${rotina.exercicios ? rotina.exercicios.length : 0} exercícios`}
@@ -119,7 +119,7 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation, dar
                             <View style={styles.dadosExercicio}>
                               <Text style={styles.nomeExercicio}>{exercicioCompleto.titulo}</Text>
                               <Text style={styles.seriesExercicio}>
-                                Séries: {Array.isArray(exercicioCompleto.series) ? exercicioCompleto.series.length : exercicioCompleto.series} • Equipamento: {exercicioCompleto.equipamento.toUpperCase()}
+                                Séries: {Array.isArray(exercicioCompleto.series) ? exercicioCompleto.series.length : exercicioCompleto.series} • {exercicioCompleto.equipamento.toUpperCase()}
                               </Text>
                             </View>
                           </View>
@@ -129,6 +129,7 @@ export default function PlanoTreinoScreen({ rotinas, setRotinas, navigation, dar
                       <Text style={styles.listaVaziaInterna}>Sem exercícios nesta rotina.</Text>
                     )}
                   </Accordion>
+                  </View>
 
                   {/* Botão Play ligado ao DetalheRotina em Modo Execução */}
                   <TouchableOpacity

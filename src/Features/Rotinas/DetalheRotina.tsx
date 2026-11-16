@@ -1,28 +1,29 @@
 import { View, Text , StyleSheet, FlatList, Image, TouchableOpacity, Modal, TextInput } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../Components/Header/Header'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import { listaExerciciosGeral } from '../Exercicios/Exercicios'; 
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {  RefreshCw, X , Edit } from 'react-native-feather';
+import {  RefreshCw, X , Edit, CheckCircle, Square } from 'react-native-feather';
 import { SquaresPlusIcon } from 'react-native-heroicons/outline';
 import ActionFooter from '../../Components/Footer/ActionFooter';
 import { getTheme } from '../../theme/theme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Accordion from '../../Components/Accordin/Accordion';
+import Checkbox from 'expo-checkbox';
 
 type RouteProps = RouteProp<RootStackParamList, 'DetalheRotina'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'DetalheRotina'>;
 
- export default function DetalheRotina({ rotinas, setRotinas, darkmode }: any) {
+ export default function DetalheRotina({ rotinas, setRotinas, setHistoricoTreinos, darkmode }: any) {
   const theme = getTheme(darkmode);
-  const route = useRoute<RouteProps>();
+  const route = useRoute<any>();
   const navigation = useNavigation<any>();
   
   const rotinaInicial = route.params?.rotina;
-  const emExecucao = route.params?.emExecucao || false; // Verifica se veio pelo botão Play
+  const emExecucao = route.params?.emExecucao || false;
   const rotina = rotinas?.find((r: any) => r.id === rotinaInicial?.id) || rotinaInicial;
   
   const [modalEditarVisivel, setModalEditarVisivel] = useState(false);
@@ -140,7 +141,7 @@ const renderBotaoEscondidoDireita = (progress: any, dragX: any, exercicio: any) 
 
   return (
     <GestureHandlerRootView style={{ flex: 1, width: '100%' }}>
-    <SafeAreaView style={styles.mainContainer}>
+    <SafeAreaView style={theme.globalStyles.mainContainer}>
             <Header subtitulo={emExecucao ? `A Treinar • ${rotina?.titulo}` : rotina?.titulo}/>
             {!emExecucao && (
              <Edit
@@ -202,7 +203,7 @@ const renderBotaoEscondidoDireita = (progress: any, dragX: any, exercicio: any) 
             <View style={styles.contentorCardExercicio}>
               <Image
                 source={{ uri: exercicio.imagemUrl }}
-                style={styles.fotoExercicio}
+                style={[styles.fotoExercicio,
                 exercicioConcluido && { borderWidth: 2, borderColor: '#45c7cc' },
                 ]}
                resizeMode="cover"
@@ -269,7 +270,6 @@ const renderBotaoEscondidoDireita = (progress: any, dragX: any, exercicio: any) 
            </TouchableOpacity>
          )}
         </View>
-        {emExecucao ? (
                      <ActionFooter
                        Icon={emExecucao ? Square : undefined}
                       actionColor={emExecucao ? (todosConcluidos ? '#32d74b' : '#ff9f0a') : '#45c7cc'}
