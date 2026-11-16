@@ -16,7 +16,7 @@ export const sobrenome = "Duarte";
 const altura = "161 cm";
 const peso = "64,1 kg";
 
-function Perfil({darkmode}: any) {
+function Perfil({rotinas = [], historicoTreinos = [], darkmode}: any) {
   const theme = getTheme(darkmode);
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -40,20 +40,22 @@ function Perfil({darkmode}: any) {
           <Text style={{ fontSize: fontSize.small, color: '#aaaaaa' }}> Altura: {altura}  •  Peso: {peso}</Text>
         </View>
 
-        <View style={styles.caixaEstatisticas}>
-          <View style={styles.colunaEstatistica}>
-            <Text style={styles.numeroEstatistica}>12</Text>
-            <Text style={styles.legendaEstatistica}>Rotinas</Text>
-          </View>
-          <View style={styles.colunaEstatistica}>
-            <Text style={styles.numeroEstatistica}>8</Text>
-            <Text style={styles.legendaEstatistica}>Concluídas</Text>
-          </View>
-          <View style={styles.colunaEstatistica}>
-            <Text style={styles.numeroEstatistica}>5</Text>
-            <Text style={styles.legendaEstatistica}>Dias/Treino</Text>
-          </View>
-        </View>
+       <View style={[styles.caixaEstatisticas, { backgroundColor: theme.colors.secondary, borderColor: theme.colors.border }]}>
+         <View style={styles.colunaEstatistica}>
+           <Text style={styles.numeroEstatistica}>{rotinas.length}</Text>
+           <Text style={[styles.legendaEstatistica, { color: theme.colors.text }]}>Rotinas</Text>
+         </View>
+         <View style={styles.colunaEstatistica}>
+           <Text style={styles.numeroEstatistica}>{historicoTreinos.length}</Text>
+           <Text style={[styles.legendaEstatistica, { color: theme.colors.text }]}>Concluídas</Text>
+         </View>
+         <View style={styles.colunaEstatistica}>
+           <Text style={styles.numeroEstatistica}>
+             {rotinas.filter((r: any) => r.selecionada).length}
+           </Text>
+           <Text style={[styles.legendaEstatistica, { color: theme.colors.text }]}>Ativas</Text>
+         </View>
+       </View>
 
         <TouchableOpacity style={styles.optionCard} activeOpacity={0.7}>
           <View style={styles.blocoEsquerdoOpcao}>
