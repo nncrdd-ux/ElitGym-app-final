@@ -1,4 +1,5 @@
-import { View, Text , StyleSheet, FlatList, Image, TouchableOpacity, Modal, TextInput } from 'react-native'
+import { View, Text , StyleSheet, FlatList, TouchableOpacity, Modal, TextInput } from 'react-native'
+import { Image } from 'expo-image';
 import { useEffect, useState } from 'react'
 import Header from '../../Components/Header/Header'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
