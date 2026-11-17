@@ -59,5 +59,15 @@ export const listaExerciciosGeral: ExercicioProps[] = [
     series:  ["15x8kg", "14x10kg", "13x12kg"],
     execucao: "posicionar um joelho e a mão do mesmo lado sobre um banco, enquanto mantém a coluna reta e o abdômen ativado para estabilizar o tronco. Com a outra mão, puxe o halter em direção ao quadril, mantendo o cotovelo próximo ao corpo e evitando movimentos bruscos ou rotação do tronco",
     imagemUrl:"https://www.hipertrofia.org/blog/wp-content/uploads/2023/11/dumbbell-one-arm-bentover-row.gif"
-}
+},
+    {
+    id: "6",
+    titulo: "Stif",
+    musculoprincipal: "posterior_coxa",
+    musculosecundario: "gluteos",
+    equipamento: "barra",
+    series:  ["15x40kg", "14x45kg", "13x50kg"],
+    execucao: "Fique em pé com os pés na largura dos quadris e os dedos apontando para frente. Segure a barra com uma pegada por cima, mãos na largura dos ombros. Mantendo as pernas retas, mas não travadas, incline-se para a frente nos quadris, abaixando a barra em direção ao chão. Abaixe a barra até sentir um alongamento nos isquiotibiais, mas certifique-se de manter a coluna neutra e evitar arquear as costas. Contraia os isquiotibiais e glúteos para levantar a barra de volta à posição em pé. Repita pelo número desejado de repetições." ,
+    imagemUrl:"https://www.hipertrofia.org/blog/wp-content/uploads/2023/04/barbell-straight-leg-deadlift.gif"
+},
 ];
