@@ -2,7 +2,7 @@ export type ExercicioProps = {
     id: string;
     titulo: string;
     musculoprincipal: string;
-    musculosecundario: string;
+    musculosecundario?: string;
     equipamento: string;
     series: string[];
     execucao: string;
@@ -76,8 +76,37 @@ export const listaExerciciosGeral: ExercicioProps[] = [
     musculoprincipal: "posterior_coxa",
     musculosecundario: "gemeos",
     equipamento: "máquina",
-    series:  ["15x40kg", "14x45kg", "13x50kg"],
+    series:  ["15x25kg", "14x30kg", "13x35kg"],
     execucao: "Garantindo que as pernas estão totalmente esticadas e pés neutros (sem estar apontados para uma direção em particular), inicie a subida da carga. Levante a carga até o suporte das pernas encostar nos glúteos ou os músculos posteriores flexionarem completamente. Tronco e pernas nunca perdem o contato com a mesa flexora. Desça a carga até a posição inicial. Repita pelo número desejado de repetições." ,
     imagemUrl:"https://www.hipertrofia.org/blog/wp-content/uploads/2018/09/mesa-flexora.gif"
+},
+    {
+    id: "8",
+    titulo: "Cadeira abdutora",
+    musculoprincipal: "gluteos",
+    equipamento: "máquina",
+    series:  ["15x30kg", "14x35kg", "13x40kg"],
+    execucao: "Sente-se na cadeira abdutora e ajuste o encosto de modo que suas costas fiquem bem apoiadas. Posicione suas pernas nos apoios laterais, com as almofadas posicionadas na parte externa das coxas. Contraia o abdômen e, de forma controlada, afaste as pernas lateralmente, empurrando contra os apoios da máquina. Afaste as pernas até sentir uma boa ativação dos músculos abdutores (na lateral do quadril). Você não deve sentir dor ou desconforto excessivo. Volte a posição inicial resistindo à força da máquina (controladamente).",
+    imagemUrl:"https://www.hipertrofia.org/blog/wp-content/uploads/2024/09/lever-seated-hip-abduction.gif"
+},
+    {
+    id: "9",
+    titulo: "Elevação pélvica",
+    musculoprincipal: "gluteos",
+    musculosecundario: "posterior_coxa",
+    equipamento: "máquina",
+    series:  ["15x50kg", "14x55kg", "13x60kg"],
+    execucao: "Sente-se no chão com um banco atrás de você, dobrando os joelhos para que os pés fiquem plantados no chão e segurando uma barra apoiada na dobra do quadril. Incline-se para trás para que as escápulas dos ombros fiquem bem fixas no banco e, com a força do glúteo, empurre a barra acima dos quadris. Na posição superior, os joelhos devem estar dobrados a cerca de 90° e os ombros devem estar próximos ao topo do banco, com o corpo formando uma linha reta entre eles. Faça uma pausa no topo do levantamento e contraia os glúteos, depois desça o quadril lentamente. Vale a pena tentar o movimento sem peso no início e certificar-se de que você está sentindo o exercício principalmente nos glúteos, e não nas coxas ou na região lombar.",
+    imagemUrl:"https://www.hipertrofia.org/blog/wp-content/uploads/2024/07/barbell-lying-lifting-on-hip.gif"
+},
+    {
+    id: "10",
+    titulo: "Desenvolvimento com halteres",
+    musculoprincipal: "ombros",
+    musculosecundario: "peito",
+    equipamento: "halteres",
+    series:  ["15x8kg", "14x10kg", "13x12kg"],
+    execucao: "Para fazer o exercício, sente-se em um banco, mantenha as costas retas, segure os halteres na altura dos ombros, com as palmas das mãos voltadas para a frente, e empurre-os para cima até que os braços estejam totalmente estendidos. Em seguida, retorne à posição inicial controladamente.",
+    imagemUrl:"https://www.hipertrofia.org/blog/wp-content/uploads/2023/09/dumbbell-seated-shoulder-press.gif"
 },
 ];
