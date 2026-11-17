@@ -109,4 +109,14 @@ export const listaExerciciosGeral: ExercicioProps[] = [
     execucao: "Para fazer o exercício, sente-se em um banco, mantenha as costas retas, segure os halteres na altura dos ombros, com as palmas das mãos voltadas para a frente, e empurre-os para cima até que os braços estejam totalmente estendidos. Em seguida, retorne à posição inicial controladamente.",
     imagemUrl:"https://www.hipertrofia.org/blog/wp-content/uploads/2023/09/dumbbell-seated-shoulder-press.gif"
 },
+    {
+    id: "11",
+    titulo: "Voador",
+    musculoprincipal: "peito",
+    musculosecundario: "triceps",
+    equipamento: "máquina",
+    series:  ["15x25kg", "14x30kg", "13x35kg", "12x40kg"],
+    execucao: "Para fazer o exercício corretamente, sente-se na máquina com os pés firmes no chão. Pegue na hastes laterais em uma altura discretamente abaixo da linha do ombro. Inspire e puxe as hastes em direção ao centro, mantendo uma curvatura leve nos cotovelos. Expire e retorne as hastes controladamente até as laterais.",
+    imagemUrl:"https://www.hipertrofia.org/blog/wp-content/uploads/2023/09/lever-seated-fly.gif"
+},
 ];
