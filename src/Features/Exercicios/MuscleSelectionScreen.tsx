@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'MuscleSelectionScreen'>;
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
+let dicaJaMostrada = false;
 
 export default function MuscleSelectionScreen({ navigation, route, darkmode }: any) {
   const rotinaParaEditarId = route?.params?.rotinaParaEditarId;
@@ -29,15 +30,13 @@ export default function MuscleSelectionScreen({ navigation, route, darkmode }: a
   ];
   const [paginaAtual, setPaginaAtual] = useState(0);
 useEffect(() => {
+  if (dicaJaMostrada) return; // Se já mostrou uma vez, não volta a abrir
+
+  dicaJaMostrada = true;
   Alert.alert(
     "💡 Dica de Elite",
     "Podes selecionar os teus exercícios tocando nas zonas do corpo inteiro. \n\n👉 Se quiseres filtrar por tipo de Equipamento, basta deslizares (scroll) para o lado!",
-    [
-      { 
-        text: "Entendido!", 
-        onPress: () => console.log("Utilizador leu as instruções.") 
-      }
-    ]
+    [{ text: "Entendido!" }]
   );
 }, []);
   return (
