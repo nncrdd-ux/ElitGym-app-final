@@ -70,4 +70,14 @@ export const listaExerciciosGeral: ExercicioProps[] = [
     execucao: "Fique em pé com os pés na largura dos quadris e os dedos apontando para frente. Segure a barra com uma pegada por cima, mãos na largura dos ombros. Mantendo as pernas retas, mas não travadas, incline-se para a frente nos quadris, abaixando a barra em direção ao chão. Abaixe a barra até sentir um alongamento nos isquiotibiais, mas certifique-se de manter a coluna neutra e evitar arquear as costas. Contraia os isquiotibiais e glúteos para levantar a barra de volta à posição em pé. Repita pelo número desejado de repetições." ,
     imagemUrl:"https://www.hipertrofia.org/blog/wp-content/uploads/2023/04/barbell-straight-leg-deadlift.gif"
 },
+    {
+    id: "7",
+    titulo: "Mesa flexora",
+    musculoprincipal: "posterior_coxa",
+    musculosecundario: "gemeos",
+    equipamento: "máquina",
+    series:  ["15x40kg", "14x45kg", "13x50kg"],
+    execucao: "Garantindo que as pernas estão totalmente esticadas e pés neutros (sem estar apontados para uma direção em particular), inicie a subida da carga. Levante a carga até o suporte das pernas encostar nos glúteos ou os músculos posteriores flexionarem completamente. Tronco e pernas nunca perdem o contato com a mesa flexora. Desça a carga até a posição inicial. Repita pelo número desejado de repetições." ,
+    imagemUrl:"https://www.hipertrofia.org/blog/wp-content/uploads/2018/09/mesa-flexora.gif"
+},
 ];
