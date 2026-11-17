@@ -91,9 +91,6 @@ useEffect(() => {
           {musculoAceso === 'abs' && (
           <Image source={require('../../../assets/abs_aceso.png')} style={styles.imagemCamada} resizeMode="contain" />
           )}
-          {musculoAceso === 'quadriceps' && (
-          <Image source={require('../../../assets/quadriceps_aceso.png')} style={styles.imagemCamada} resizeMode="contain" />
-          )}
           {musculoAceso === 'gemeos' && (
           <Image source={require('../../../assets/gemeos_aceso.png')} style={styles.imagemCamada} resizeMode="contain" />
           )}
