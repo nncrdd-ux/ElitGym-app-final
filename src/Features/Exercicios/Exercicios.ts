@@ -111,7 +111,7 @@ export const listaExerciciosGeral: ExercicioProps[] = [
 },
     {
     id: "11",
-    titulo: "Voador",
+    titulo: "Fly na máquina",
     musculoprincipal: "peito",
     musculosecundario: "triceps",
     equipamento: "máquina",
