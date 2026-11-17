@@ -55,7 +55,7 @@ function Perfil({rotinas = [], historicoTreinos = [], darkmode}: any) {
          </View>
        </View>
 
-        <TouchableOpacity style={styles.optionCard} activeOpacity={0.7}>
+        <TouchableOpacity style={styles.optionCard} activeOpacity={0.7} onPress={() => navigation.navigate('ProfileScreen')}>
           <View style={styles.blocoEsquerdoOpcao}>
             <Edit color="#45c7cc" strokeWidth={2} size={20} /> 
             <Text style={styles.textoOpcao}>Editar Perfil</Text>
